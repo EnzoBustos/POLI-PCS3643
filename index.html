@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Medilab Bootstrap Template</title>
+  <title>AedesWiki</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -12,8 +12,8 @@
   <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
+  <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -45,16 +45,49 @@
   <header id="header" class="header sticky-top">
 
     <div class="topbar d-flex align-items-center">
+
       <div class="container d-flex justify-content-center justify-content-md-between">
+        <!--Info de Contato à Esquerda-->
         <div class="contact-info d-flex align-items-center">
-          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-          <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+          <i class="bi bi-envelope-open d-flex align-items-center">
+            <a href="mailto:aedeswiki@exemplo.gov" target="_blank" rel="noopener noreferrer">
+              aedeswiki@exemplo.gov
+            </a>
+          </i>
+          <i class="bi bi-telephone d-flex align-items-center ms-4">
+            <a href="https://wa.link/qx23r2" target="_blank" rel="noopener noreferrer">
+              +55 (11) 91234-5678
+            </a>
+          </i>
+          <i class="bi bi-link-45deg d-flex align-items-center ms-4">
+            <a href="https://enzobustos.github.io/POLI-PCS3643/" target="_blank" rel="noopener noreferrer">
+              enzobustos.github.io/POLI-PCS3643/
+            </a>
+          </i>
         </div>
+        <!--Ícones de Media à direita-->
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="./wiki.html" class="twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          <a href="" class="tiktok">
+            <i class="bi bi-tiktok"></i>
+          </a>
+          <a href="" class="whatsapp">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <a href="" class="discord">
+            <i class="bi bi-discord"></i>
+          </a>
+          <a href="./wiki.html" class="twitter">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          <a href="#" class="facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="#" class="instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="#" class="linkedin">
+            <i class="bi bi-linkedin"></i>
+          </a>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -63,18 +96,19 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
-          <h1 class="sitename">Medilab</h1>
+          <img src="assets/img/LogoAedesWiki.png" alt="">
+          <h1 class="sitename">
+            <em>Aedes</em>Wiki
+          </h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Home<br></a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#departments">Departments</a></li>
-            <li><a href="#doctors">Doctors</a></li>
+            <li><a href="./index.html" class="active">Início<br></a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#services">Notícias</a></li>
+            <li><a href="#departments">Dúvidas e FAQ</a></li>
+            <li><a href="#doctors">Especialistas</a></li>
             <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
@@ -92,12 +126,15 @@
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Denúncias</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>
+        <a class="cta-btn d-none d-sm-block" href="#appointment">
+          <i class="bi bi-search"></i>
+          Buscar...
+        </a>
 
       </div>
 
@@ -115,19 +152,19 @@
       <div class="container position-relative">
 
         <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
-          <h2>BEM-VINDO AO DATADENGUE</h2>
-          <p>Somos uma equipe dedicada a fornecer informações essenciais sobre o Aedes aegypti e arboviroses.</p>
+          <h2 class="white-stroke">Seja bem-vindo ao <em>Aedes</em>Wiki!</h2>
+          <p class="white-stroke">Conscientização é Proteção: Tudo sobre o <em>Aedes aegypti</em>, em um só lugar.</p>
         </div><!-- End Welcome -->
 
         <div class="content row gy-4">
           <div class="col-lg-4 d-flex align-items-stretch">
             <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
-              <h3>Perigos do Aedes aegypti</h3>
+              <h3>Perigos do <br> <em>Aedes aegypti</em></h3>
               <p>
-                O Aedes aegypti é um mosquito que transmite doenças graves, como dengue, zika e chikungunya. Suas picadas podem causar febre alta, dor intensa nas articulações e erupções cutâneas. Em casos severos, a dengue pode levar a hemorragias e até à morte. A proliferação desse mosquito é rápida e ocorre em locais com água parada, tornando a prevenção crucial. Combatê-lo exige vigilância constante e ações eficazes para evitar o acúmulo de água e proteger a saúde pública.
+                O <em>Aedes aegypti</em> é um mosquito conhecido por transmitir doenças como Dengue, Zika, Chikungunya e Febre Amarela, afetando muitas regiões tropicais e subtropicais. Ele se reproduz em locais com água parada, como vasos de plantas e recipientes mal vedados. As picadas desse mosquito podem causar sintomas como febre, dores no corpo e nas articulações, além de erupções na pele. Em casos mais graves, como na dengue, pode haver complicações sérias. Por isso, eliminar focos de água parada e se proteger contra picadas são medidas importantes para prevenir essas doenças.
               </p>
               <div class="text-center">
-                <a href="#about" class="more-btn"><span>Saiba mais</span> <i class="bi bi-chevron-right"></i></a>
+                <a href="#sobre" class="more-btn"><span>Clique para saber mais</span> <i class="bi bi-chevron-right"></i></a>
               </div>
             </div>
           </div><!-- End Why Box -->
@@ -138,25 +175,25 @@
 
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
-                    <i class="bi bi-clipboard-data"></i>
-                    <h4>Corporis voluptates officia eiusmod</h4>
-                    <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                    <i class="bi bi-shield-check"></i>
+                    <h4>Prevenção e Sintomas</h4>
+                    <p>Descubra como eliminar criadouros e os principais sintomas das doenças que este mosquito transmite.</p>
                   </div>
                 </div><!-- End Icon Box -->
 
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
-                    <i class="bi bi-gem"></i>
-                    <h4>Ullamco laboris ladore pan</h4>
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                    <i class="bi bi-newspaper"></i>
+                    <h4>Atualizações e Notícias Recentes</h4>
+                    <p>Confira as novidades sobre os surtos das doenças na sua região e as novas medidas de combate ao <em>Aedes aegypti</em>.</p>
                   </div>
                 </div><!-- End Icon Box -->
 
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
-                    <i class="bi bi-inboxes"></i>
-                    <h4>Labore consequatur incidid dolore</h4>
-                    <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+                    <i class="bi bi-megaphone"></i>
+                    <h4>Denúncia de Focos e Criadouros</h4>
+                    <p>Denuncie possíveis focos na sua comunidade e ajude a combater a proliferação deste vetor de doenças!</p>
                   </div>
                 </div><!-- End Icon Box -->
 
@@ -170,15 +207,15 @@
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
+    <section id="sobre" class="about section">
 
       <div class="container">
 
         <div class="row gy-4 gx-5">
 
           <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
-            <img src="assets/img/about_mosquito.jpg" class="img-fluid" alt="">
-            <a href="https://www.youtube.com/watch?v=WgbUD0ryiHg" class="glightbox pulsating-play-btn"></a>
+            <img src="assets/img/Sobre_Mosquito.png" class="img-fluid" alt="" style="max-height: 525px; width: 100%;">
+            <a href="https://www.youtube.com/watch?v=Dp5oNDf462s" class="glightbox pulsating-play-btn"></a>
           </div>
 
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
