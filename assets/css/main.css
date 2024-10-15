@@ -315,6 +315,10 @@ h6 {
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }
 
+.header .cta-btn .red{
+  color:#df1529;
+}
+
 @media (max-width: 1200px) {
   .header .logo {
     order: 1;
