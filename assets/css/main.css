@@ -315,8 +315,12 @@ h6 {
   background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }
 
-.header .cta-btn .red{
-  color:#df1529;
+.cta-btn input {
+  width: 80%;
+  padding: 0.15em 0.5em 0.15em 1em;
+  box-sizing: border-box;
+  border: 1px solid darkblue;
+  border-radius: 1em;
 }
 
 @media (max-width: 1200px) {
