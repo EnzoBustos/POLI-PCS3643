@@ -15,6 +15,11 @@
   <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
   <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
 
+  <!-- Preload para otimização -->
+  <link rel="preload" href="assets/css/main.css" as="style">
+  <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -30,14 +35,6 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: Medilab
-  * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="index-page">
@@ -67,27 +64,29 @@
         </div>
         <!--Ícones de Media à direita-->
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="" class="tiktok">
+          <a href="tiktok.com" target="_blank" class="tiktok">
             <i class="bi bi-tiktok"></i>
           </a>
-          <a href="" class="whatsapp">
+          <a href="whatsapp.com" target="_blank" class="whatsapp">
             <i class="bi bi-whatsapp"></i>
           </a>
-          <a href="" class="discord">
+          <a href="discord.com" target="_blank" class="discord">
             <i class="bi bi-discord"></i>
           </a>
-          <a href="./wiki.html" class="twitter">
+          <a href="x.com" target="_blank" class="twitter">
             <i class="bi bi-twitter-x"></i>
           </a>
-          <a href="#" class="facebook">
+          <a href="facebook.com" target="_blank" class="facebook">
             <i class="bi bi-facebook"></i>
           </a>
-          <a href="#" class="instagram">
+          <a href="instagram.com" target="_blank" class="instagram">
             <i class="bi bi-instagram"></i>
           </a>
-          <a href="#" class="linkedin">
+          <a href="linkedin.com" target="_blank" class="linkedin">
             <i class="bi bi-linkedin"></i>
           </a>
+        
+          </div>
         </div>
       </div>
     </div><!-- End Top Bar -->
@@ -102,41 +101,52 @@
           </h1>
         </a>
 
-        <a class="cta-btn d-none d-sm-block" href="#appointment">
-          <i class="bi bi-exclamation-circle"></i>
-          <span>Denuncie!</span>
-        </a>
-
         <nav id="navmenu" class="navmenu">
 
           <ul>
             <li><a href="./index.html" class="active">Página inicial<br></a></li>
             <li class="dropdown">
-              <a href="./info.html">
+              <a href="#sobre">
                 <span>
                   Informações
                 </span>
                 <i class="bi bi-chevron-down toggle-dropdown"></i>
               </a>
               <ul>
-                <li><a href="./mosquito.html">Mosquito</a></li>
-                <li><a href="./prevention.html">Prevenção</a></li>
-                <li><a href="./transmission.html">Transmissão</a></li>
-                <li><a href="./combat.html">Combate</a></li>
+                <li><a href="#sobre">Mosquito</a></li>
+                <li><a href="#services">Ações de Prevenção</a></li>
+                <li><a href="#faq">Perguntas Frequentes</a></li>
+                <li><a href="#gallery">Galeria</a></li>
+                <li><a href="#footer">Criadores da Wiki</a></li>
               </ul>
             </li>
             <li><a href="./news.html">Notícias</a></li>
-            <li><a href="./faq.html">FAQ</a></li>
-            <li><a href="./report.html">Denúncias</a></li>
+            <li><a href="./report.html">Denuncie</a></li>
+            <li class="dropdown">
+              <a href="./profile.html">
+                <span>
+                  Sua página
+                </span>
+                <i class="bi bi-person-circle"></i>
+              </a>
+              <ul>
+                <li><a href="./profile.html">Meu Perfil</a></li>
+                <li><a href="./posts.html">Minhas Publicações</a></li>
+                <li><a href="./friends-list.html">Lista de Amigos</a></li>
+                <li><a href="./settings.html">Configurações</a></li>
+              </ul>
+            </li>
           </ul>
+          
           <!--Não mexer nisso-->
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn d-none d-sm-block" href="#appointment">
-          <i class="bi bi-search"></i>
-          Buscar...
-        </a>
+        <a class="cta-btn d-none d-sm-block" href="./wiki.html">
+          <i class="fa-solid fa-mosquito" style="margin-right: 0.5em;"></i>
+          <span>Acesse a Wiki</span>
+          <i class="fa-solid fa-mosquito" style="margin-left: 0.5em;"></i>
+        </a>        
 
       </div>
 
