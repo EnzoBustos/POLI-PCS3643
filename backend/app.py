@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, jsonify, render_template, redirect, url_for, request, flash, session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, UserMixin
 from flask_wtf import FlaskForm
@@ -8,6 +9,9 @@ from flask_cors import CORS
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import uuid
+import requests
+from flask_login import current_user
+from datetime import datetime
 
 app = Flask(__name__, template_folder='../', static_folder='../assets')
 app.secret_key = 'labsoft'  # chave secreta segura
@@ -211,6 +215,109 @@ def get_category():
 @app.route('/auth_index')
 def auth_index():
     return render_template('auth_index.html')
+
+
+def fetch_dengue_news():
+    if not current_user.is_authenticated:
+        flash("Você precisa estar logado para adicionar notícias.", "danger")
+        return redirect(url_for('login'))
+
+    api_key = "17f5dd0c4aca476f9ee1d9a340764639"
+    url = f"https://newsapi.org/v2/everything?q=dengue&apiKey={api_key}"
+    response = requests.get(url)
+    articles = response.json().get("articles", [])
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # Substitua pelo ID real da categoria
+    default_category_id = "id_da_categoria_padrao"
+
+    for article in articles:
+        # Verifica se o título está presente
+        title = article.get('title')
+        if not title:
+            # Ignora o artigo se o título estiver ausente
+            continue
+
+        new_id = str(uuid.uuid4())
+        summary = article.get('description', "")
+        content = article.get('content', "")
+        created_at = updated_at = datetime.now()
+
+        # Verifica se o título já existe para evitar duplicação
+        cursor.execute("SELECT 1 FROM news WHERE title = %s", (title,))
+        if cursor.fetchone() is None:
+            # Insere o registro em `news_historic` primeiro
+            cursor.execute("""
+                INSERT INTO news_historic (new_id, title, created_at)
+                VALUES (%s, %s, %s)
+            """, (new_id, title, created_at))
+
+            # Insere o registro em `news`
+            cursor.execute("""
+                INSERT INTO news (new_id, title, summary, content, created_at, updated_at, user_id, category_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (new_id, title, summary, content, created_at, updated_at, current_user.id, default_category_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return articles
+
+
+def get_news_id_by_title(title):
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT news_id FROM news WHERE title = %s", (title,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result[0] if result else None
+
+
+@app.route('/dengue_news')
+def dengue_news():
+    articles = fetch_dengue_news()
+    # Adiciona os comentários para cada artigo
+    for article in articles:
+        # Aqui estamos usando o título como ID, ajuste se necessário
+        article_id = article['title']
+        article['comments'] = get_comments(article_id)
+    return render_template('dengue_news.html', articles=articles)
+
+
+def get_comments(article_id):
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor.execute(
+        "SELECT content, user_id FROM news_comments WHERE new_id = %s ORDER BY created_at DESC", (article_id,))
+    comments = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return comments
+
+
+@app.route('/add-comment/<string:article_id>', methods=['POST'])
+@login_required
+def add_comment(article_id):
+    content = request.form.get('content')
+    user_id = current_user.id  # ID do usuário logado
+    comment_id = str(uuid.uuid4())
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO news_comments (comment_id, content, created_at, updated_at, user_id, new_id, upvotes, downvotes)
+        VALUES (%s, %s, NOW(), NOW(), %s, %s, 0, 0)
+    """, (comment_id, content, user_id, article_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Comentário adicionado com sucesso!", "success")
+    return redirect(url_for('dengue_news'))
 
 
 if __name__ == "__main__":
