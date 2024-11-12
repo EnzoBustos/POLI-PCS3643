@@ -9,7 +9,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import uuid
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../', static_folder='../assets')
 app.secret_key = 'labsoft'  # chave secreta segura
 CORS(app)
 
@@ -82,13 +82,19 @@ def login():
         user = cursor.fetchone()
         cursor.close()
         conn.close()
+
+        # Verifica se o usuário existe e a senha está correta
         if user and check_password_hash(user['password'], form.password.data):
             user_obj = User(user['user_id'], user['email'],
                             user['username'], user['password'], user['location_id'])
             login_user(user_obj)
-            return redirect(url_for('index'))
+            return redirect(url_for('auth_index'))
         else:
-            flash('Credenciais inválidas. Tente novamente.')
+            flash('Credenciais inválidas. Tente novamente.', 'danger')
+            # Redireciona para a página de login novamente em caso de erro
+            return render_template('login.html', form=form)
+
+    # Renderiza o template de login com o formulário
     return render_template('login.html', form=form)
 
 
@@ -96,19 +102,35 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        hashed_password = generate_password_hash(
-            form.password.data, method='sha256')
         conn = connect_db()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO users (user_id, email, username, password, created_at, updated_at, user_type, location_id)
-            VALUES (%s, %s, %s, %s, NOW(), NOW(), %s, %s)
-        """, (str(uuid.uuid4()), form.email.data, form.username.data, hashed_password, 'user', 'default_location_id'))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        flash('Registrado com sucesso! Faça login.')
-        return redirect(url_for('login'))
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        try:
+            # Verificar se o e-mail ou nome de usuário já existe
+            cursor.execute("SELECT * FROM users WHERE email = %s OR username = %s",
+                           (form.email.data, form.username.data))
+            existing_user = cursor.fetchone()
+
+            if existing_user:
+                flash('E-mail ou nome de usuário já estão em uso.')
+                return render_template('register.html', form=form)
+
+            # Inserir novo usuário com senha hash
+            hashed_password = generate_password_hash(
+                form.password.data, method='pbkdf2:sha256')
+            cursor.execute("""
+    INSERT INTO users (user_id, email, username, password, created_at, updated_at, user_type)
+    VALUES (%s, %s, %s, %s, NOW(), NOW(), %s)
+""", (str(uuid.uuid4()), form.email.data, form.username.data, hashed_password, 'user'))
+
+            conn.commit()
+
+            flash('Registrado com sucesso! Faça login.')
+            return redirect(url_for('login'))
+
+        finally:
+            cursor.close()
+            conn.close()
+
     return render_template('register.html', form=form)
 
 
@@ -184,6 +206,11 @@ def get_category():
     return jsonify(get_data_from_table('category'))
 
 # Continue com as outras rotas específicas que você listou
+
+
+@app.route('/auth_index')
+def auth_index():
+    return render_template('auth_index.html')
 
 
 if __name__ == "__main__":
