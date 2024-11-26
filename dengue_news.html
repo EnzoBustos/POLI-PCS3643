@@ -175,36 +175,49 @@
             <div class="container" data-aos="fade-up">
                 <h2>Notícias sobre Dengue</h2>
 
-                <!-- Loop through articles -->
+                <!-- Verifica se há artigos disponíveis -->
+                {% if articles %}
                 {% for article in articles %}
+                <!-- Bloco de exibição de notícia -->
                 <div class="news-article">
                     <h2>{{ article['title'] }}</h2>
-                    <p>{{ article['description'] }}</p>
+                    <p>{{ article['summary'] }}</p>
                     <a href="{{ article['url'] }}" target="_blank">Leia mais</a>
 
-                    <!-- Seção de Comentários -->
+                    <!-- Exibe comentários -->
                     <div class="comments mt-4">
                         <h3>Comentários</h3>
-                        <form action="{{ url_for('add_comment', article_id=article['id']) }}" method="POST">
+
+                        <!-- Formulário para adicionar comentário -->
+                        {% if current_user.is_authenticated %}
+                        <form action="{{ url_for('add_comment', article_id=article['new_id']) }}" method="POST">
                             <textarea name="content" placeholder="Adicione seu comentário..." required></textarea>
                             <button type="submit" class="btn btn-primary mt-2">Enviar</button>
                         </form>
+                        {% else %}
+                        <p>Faça login para adicionar comentários.</p>
+                        {% endif %}
 
+                        <!-- Loop para exibir os comentários -->
                         {% for comment in article['comments'] %}
                         <div class="comment mt-3">
-                            <p><strong>{{ comment['user_id'] }}</strong>: {{ comment['content'] }}</p>
+                            <p><strong>{{ comment['username'] }}</strong>: {{ comment['content'] }}</p>
                         </div>
                         {% endfor %}
                     </div>
+
                 </div>
                 <hr class="my-4">
                 {% endfor %}
-
-
+                {% else %}
+                <p>Nenhuma notícia encontrada.</p>
+                {% endif %}
             </div>
-        </section><!-- /Notícias Section -->
+        </section>
+        <!-- /Notícias Section -->
 
     </main>
+
 
 
     <footer id="footer" class="footer light-background">

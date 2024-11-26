@@ -218,52 +218,79 @@ def auth_index():
 
 
 def fetch_dengue_news():
-    if not current_user.is_authenticated:
-        flash("Você precisa estar logado para adicionar notícias.", "danger")
-        return redirect(url_for('login'))
-
     api_key = "17f5dd0c4aca476f9ee1d9a340764639"
     url = f"https://newsapi.org/v2/everything?q=dengue&apiKey={api_key}"
     response = requests.get(url)
-    articles = response.json().get("articles", [])
+
+    # Verifica se a API retornou sucesso
+    if response.status_code == 200:
+        data = response.json()
+        articles = data.get("articles", [])
+        print("Artigos retornados pela API:", articles)  # Debug
+    else:
+        flash("Erro ao buscar notícias da API.", "danger")
+        return []
 
     conn = connect_db()
     cursor = conn.cursor()
 
-    # Substitua pelo ID real da categoria
+    # Categoria padrão
     default_category_id = "id_da_categoria_padrao"
+    category_name = "Dengue"
 
+    # Verifica se a categoria padrão existe
+    cursor.execute("SELECT 1 FROM category WHERE category_id = %s",
+                   (default_category_id,))
+    if cursor.fetchone() is None:
+        cursor.execute("INSERT INTO category (category_id, name) VALUES (%s, %s)",
+                       (default_category_id, category_name))
+
+    # Insere artigos no banco de dados
     for article in articles:
-        # Verifica se o título está presente
         title = article.get('title')
-        if not title:
-            # Ignora o artigo se o título estiver ausente
+        url = article.get('url', "")  # Captura o campo 'url'
+
+        if not title or not url:  # Certifica-se de que o título e a URL existem
             continue
 
-        new_id = str(uuid.uuid4())
         summary = article.get('description', "")
         content = article.get('content', "")
         created_at = updated_at = datetime.now()
+        new_id = str(uuid.uuid4())
 
-        # Verifica se o título já existe para evitar duplicação
+        if not title or not url:  # Certifique-se de que o título e a URL existem
+            continue
+
+        # Atualiza a notícia no banco de dados com a URL
+        cursor.execute("""
+            UPDATE news
+            SET url = %s
+            WHERE title = %s
+        """, (url, title))
+
+        # Verifica se o título já existe no banco de dados
         cursor.execute("SELECT 1 FROM news WHERE title = %s", (title,))
         if cursor.fetchone() is None:
-            # Insere o registro em `news_historic` primeiro
             cursor.execute("""
-                INSERT INTO news_historic (new_id, title, created_at)
-                VALUES (%s, %s, %s)
-            """, (new_id, title, created_at))
-
-            # Insere o registro em `news`
-            cursor.execute("""
-                INSERT INTO news (new_id, title, summary, content, created_at, updated_at, user_id, category_id)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """, (new_id, title, summary, content, created_at, updated_at, current_user.id, default_category_id))
+                INSERT INTO news (new_id, title, summary, content, url, created_at, updated_at, user_id, category_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (new_id, title, summary, content, url, created_at, updated_at, None, default_category_id))
 
     conn.commit()
     cursor.close()
     conn.close()
 
+    return articles
+
+
+def get_articles_from_db():
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor.execute("SELECT * FROM news ORDER BY created_at DESC")
+    articles = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    print("Artigos recuperados do banco de dados:", articles)  # Debug
     return articles
 
 
@@ -279,20 +306,31 @@ def get_news_id_by_title(title):
 
 @app.route('/dengue_news')
 def dengue_news():
-    articles = fetch_dengue_news()
-    # Adiciona os comentários para cada artigo
-    for article in articles:
-        # Aqui estamos usando o título como ID, ajuste se necessário
-        article_id = article['title']
+    # Busca notícias na API e as insere no banco
+    fetch_dengue_news()
+
+    # Recupera notícias do banco de dados
+    db_articles = get_articles_from_db()
+    print("Artigos recuperados do banco de dados:", db_articles)
+
+    # Adiciona comentários (se o usuário estiver logado)
+    for article in db_articles:
+        article_id = article['new_id']
         article['comments'] = get_comments(article_id)
-    return render_template('dengue_news.html', articles=articles)
+
+    return render_template('dengue_news.html', articles=db_articles)
 
 
 def get_comments(article_id):
     conn = connect_db()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
-    cursor.execute(
-        "SELECT content, user_id FROM news_comments WHERE new_id = %s ORDER BY created_at DESC", (article_id,))
+    cursor.execute("""
+        SELECT news_comments.content, users.username
+        FROM news_comments
+        JOIN users ON news_comments.user_id = users.user_id
+        WHERE news_comments.new_id = %s
+        ORDER BY news_comments.created_at DESC
+    """, (article_id,))
     comments = cursor.fetchall()
     cursor.close()
     conn.close()
