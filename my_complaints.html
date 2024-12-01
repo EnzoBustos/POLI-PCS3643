@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Denúncias</title>
+</head>
+
+<body>
+    <h1>Minhas Denúncias</h1>
+
+    {% if complaints %}
+    <table>
+        <thead>
+            <tr>
+                <th>Local</th>
+                <th>Severidade</th>
+                <th>Método</th>
+                <th>Mensagem</th>
+                <th>Status</th>
+                <th>Criado em</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.location }}</td>
+                <td>{{ complaint.severity }}</td>
+                <td>{{ complaint.method }}</td>
+                <td>{{ complaint.message }}</td>
+                <td>
+                    {% if complaint.resolved == 'TRUE' %}
+                    Resolvido
+                    {% else %}
+                    Pendente
+                    {% endif %}
+                </td>
+                <td>{{ complaint.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Você ainda não fez nenhuma denúncia.</p>
+    {% endif %}
+</body>
+
+</html>

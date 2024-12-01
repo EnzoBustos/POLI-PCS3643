@@ -554,5 +554,47 @@ def admin_complaints():
     return render_template('admin_complaints.html', complaints=pending_complaints)
 
 
+@app.route('/my_articles')
+@login_required
+def my_articles():
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Recupera os artigos criados pelo usuário logado
+    cursor.execute("""
+        SELECT title, content, is_approved, created_at 
+        FROM articles 
+        WHERE user_id = %s
+        ORDER BY created_at DESC
+    """, (current_user.id,))
+    articles = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('my_articles.html', articles=articles)
+
+
+@app.route('/my_complaints')
+@login_required
+def my_complaints():
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Recupera as denúncias feitas pelo usuário logado
+    cursor.execute("""
+        SELECT location, severity, method, message, is_resolved, created_at 
+        FROM complaints 
+        WHERE email = %s
+        ORDER BY created_at DESC
+    """, (current_user.email,))
+    complaints = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('my_complaints.html', complaints=complaints)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

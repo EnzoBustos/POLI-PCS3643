@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Artigos</title>
+</head>
+
+<body>
+    <h1>Meus Artigos</h1>
+
+    {% if articles %}
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Conteúdo</th>
+                <th>Status</th>
+                <th>Criado em</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content }}</td>
+                <td>
+                    {% if article.is_approved == 'TRUE' %}
+                    Aprovado
+                    {% elif article.is_approved == 'REFUSED' %}
+                    Rejeitado
+                    {% else %}
+                    Pendente
+                    {% endif %}
+                </td>
+                <td>{{ article.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Você ainda não criou nenhum artigo.</p>
+    {% endif %}
+</body>
+
+</html>
