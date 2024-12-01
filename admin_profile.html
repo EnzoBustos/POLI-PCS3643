@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Perfil</title>
+</head>
+
+<body>
+    <h1>Perfil de Administrador</h1>
+    <p><strong>Nome de Usuário:</strong> {{ user_info.username }}</p>
+    <p><strong>E-mail:</strong> {{ user_info.email }}</p>
+    <p><strong>Tipo de Usuário:</strong> Administrador</p>
+
+    <!-- Links adicionais para administradores -->
+    <a href="{{ url_for('manage_users') }}">Gerenciar Usuários</a>
+    <a href="{{ url_for('view_reports') }}">Ver Denúncias</a>
+</body>
+
+</html>

@@ -35,12 +35,13 @@ def connect_db():
 
 
 class User(UserMixin):
-    def __init__(self, user_id, email, username, password, location_id):
+    def __init__(self, user_id, email, username, password, location_id, user_type):
         self.id = user_id
         self.email = email
         self.username = username
         self.password = password
         self.location_id = location_id
+        self.user_type = user_type  # Adicione o atributo user_type
 
 
 @login_manager.user_loader
@@ -52,8 +53,9 @@ def load_user(user_id):
     cursor.close()
     conn.close()
     if user:
-        return User(user['user_id'], user['email'], user['username'], user['password'], user['location_id'])
+        return User(user['user_id'], user['email'], user['username'], user['password'], user['location_id'], user['user_type'])
     return None
+
 
 # Formulários
 
@@ -89,16 +91,20 @@ def login():
 
         # Verifica se o usuário existe e a senha está correta
         if user and check_password_hash(user['password'], form.password.data):
-            user_obj = User(user['user_id'], user['email'],
-                            user['username'], user['password'], user['location_id'])
+            user_obj = User(
+                user['user_id'],
+                user['email'],
+                user['username'],
+                user['password'],
+                user['location_id'],
+                user['user_type']  # Adiciona o user_type ao criar o objeto
+            )
             login_user(user_obj)
             return redirect(url_for('auth_index'))
         else:
             flash('Credenciais inválidas. Tente novamente.', 'danger')
-            # Redireciona para a página de login novamente em caso de erro
             return render_template('login.html', form=form)
 
-    # Renderiza o template de login com o formulário
     return render_template('login.html', form=form)
 
 
@@ -151,13 +157,6 @@ def logout():
 def index():
     return render_template('index.html')
 
-# Exemplo de rota protegida
-
-
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', name=current_user.username)
 
 # Rotas para dados específicos
 
@@ -356,6 +355,47 @@ def add_comment(article_id):
 
     flash("Comentário adicionado com sucesso!", "success")
     return redirect(url_for('dengue_news'))
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    # Obtenha as informações do usuário logado
+    user_info = {
+        "username": current_user.username,
+        "email": current_user.email,
+        "user_type": current_user.user_type,  # Identifica se é admin ou normal
+    }
+
+    # Renderize um template diferente para admins, se necessário
+    if current_user.user_type == "admin":
+        return render_template('admin_profile.html', user_info=user_info)
+    else:
+        return render_template('user_profile.html', user_info=user_info)
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE users
+            SET username = %s, email = %s
+            WHERE user_id = %s
+        """, (username, email, current_user.id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        flash("Perfil atualizado com sucesso!", "success")
+        return redirect(url_for('profile'))
+
+    return render_template('edit_profile.html', user_info=current_user)
 
 
 if __name__ == "__main__":
