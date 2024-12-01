@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Aprovar Artigos</title>
+</head>
+
+<body>
+    <h1>Artigos Pendentes para Aprovação</h1>
+
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.content }}</p>
+            <form method="POST" action="{{ url_for('admin_articles') }}" style="display: inline;">
+                <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                <input type="hidden" name="action" value="approve">
+                <button type="submit" style="background-color: green; color: white;">Aprovar</button>
+            </form>
+            <form method="POST" action="{{ url_for('admin_articles') }}" style="display: inline;">
+                <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                <input type="hidden" name="action" value="reject">
+                <button type="submit" style="background-color: red; color: white;">Rejeitar</button>
+            </form>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há artigos pendentes para aprovação.</p>
+    {% endif %}
+</body>
+
+</html>

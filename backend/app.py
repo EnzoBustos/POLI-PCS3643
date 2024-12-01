@@ -398,5 +398,100 @@ def edit_profile():
     return render_template('edit_profile.html', user_info=current_user)
 
 
+@app.route('/create_article', methods=['GET', 'POST'])
+@login_required
+def create_article():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+
+        # Insere o artigo no banco de dados
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO articles (title, content, user_id, is_approved)
+            VALUES (%s, %s, %s, 'FALSE')
+        """, (title, content, current_user.id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        flash("Artigo criado e enviado para aprovação!", "success")
+        return redirect(url_for('create_article'))
+
+    return render_template('create_article.html')
+
+
+@app.route('/admin/articles', methods=['GET', 'POST'])
+@login_required
+def admin_articles():
+    if current_user.user_type != 'admin':  # Certifica que só admins acessam
+        flash("Você não tem permissão para acessar esta página.", "danger")
+        return redirect(url_for('index'))
+
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Busca os artigos que ainda não foram aprovados
+    cursor.execute("SELECT * FROM articles WHERE is_approved = 'FALSE'")
+    pending_articles = cursor.fetchall()
+
+    if request.method == 'POST':
+        article_id = request.form.get('article_id')
+        # Identifica se é aprovar ou rejeitar
+        action = request.form.get('action')
+
+        if action == 'approve':
+            # Aprova o artigo no banco de dados
+            cursor.execute("""
+                UPDATE articles SET is_approved = 'TRUE', updated_at = NOW() WHERE article_id = %s
+            """, (article_id,))
+            flash("Artigo aprovado com sucesso!", "success")
+        elif action == 'reject':
+            # Rejeita o artigo no banco de dados (altera status ou remove)
+            cursor.execute("""
+                UPDATE articles SET is_approved = 'REFUSED', updated_at = NOW() WHERE article_id = %s
+            """, (article_id,))
+            flash("Artigo rejeitado com sucesso!", "success")
+
+        conn.commit()
+        return redirect(url_for('admin_articles'))
+
+    cursor.close()
+    conn.close()
+    return render_template('admin_articles.html', articles=pending_articles)
+
+
+@app.route('/wiki')
+def wiki():
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Busca artigos aprovados
+    cursor.execute("SELECT * FROM articles WHERE is_approved = 'TRUE'")
+    approved_articles = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+    return render_template('wiki2.html', articles=approved_articles)
+
+
+@app.route('/manage_users')
+@login_required
+def manage_users():
+    if current_user.user_type != 'admin':
+        flash("Você não tem permissão para acessar esta página.", "danger")
+        return redirect(url_for('index'))
+
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cursor.execute("SELECT user_id, username, email, user_type FROM users")
+    users = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('manage_users.html', users=users)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

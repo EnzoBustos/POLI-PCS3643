@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki</title>
+</head>
+
+<body>
+    <h1>Wiki - Artigos Aprovados</h1>
+
+    {% if articles %}
+    <ul>
+        {% for article in articles %}
+        <li>
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.content }}</p>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há artigos disponíveis.</p>
+    {% endif %}
+</body>
+
+</html>
