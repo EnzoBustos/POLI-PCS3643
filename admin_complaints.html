@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denúncias - Admin</title>
+</head>
+
+<body>
+    <h1>Denúncias Pendentes</h1>
+    {% if complaints %}
+    <ul>
+        {% for complaint in complaints %}
+        <li>
+            <h3><strong>Local:</strong>{{ complaint.location }} - <strong>Gravidade:</strong>{{ complaint.severity }}
+            </h3>
+            <p><strong>Nome:</strong> {{ complaint.name }}</p>
+            <p><strong>Email:</strong> {{ complaint.email }}</p>
+            <p><strong>Telefone:</strong> {{ complaint.phone }}</p>
+            <p><strong>Método:</strong> {{ complaint.method }}</p>
+            <p><strong>Mensagem:</strong> {{ complaint.message }}</p>
+            <form method="POST" action="{{ url_for('admin_complaints') }}">
+                <input type="hidden" name="complaint_id" value="{{ complaint.complaint_id }}">
+                <button type="submit">Marcar como Resolvido</button>
+            </form>
+        </li>
+        <hr>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Não há denúncias pendentes.</p>
+    {% endif %}
+</body>
+
+</html>

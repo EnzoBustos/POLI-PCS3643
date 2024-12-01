@@ -493,5 +493,66 @@ def manage_users():
     return render_template('manage_users.html', users=users)
 
 
+@app.route('/submit_complaint', methods=['POST'])
+def submit_complaint():
+    # Captura os dados do formulário
+    name = request.form.get('name')
+    email = request.form.get('email')
+    phone = request.form.get('phone')
+    location = request.form.get('location')
+    severity = request.form.get('severity')
+    method = request.form.get('method')
+    message = request.form.get('message')
+
+    # Insere os dados no banco de dados
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO complaints (name, email, phone, location, severity, method, message, is_resolved, created_at)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, FALSE, NOW())
+    """, (name, email, phone, location, severity, method, message))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    # Exibe uma mensagem de sucesso e redireciona
+    flash("Sua denúncia foi enviada com sucesso. Obrigado!", "success")
+    return redirect(url_for('complaint_form'))
+
+
+@app.route('/complaint_form')
+def complaint_form():
+    return render_template('complaint_form.html')
+
+
+@app.route('/admin/complaints', methods=['GET', 'POST'])
+@login_required
+def admin_complaints():
+    if current_user.user_type != 'admin':  # Apenas admin pode acessar
+        flash("Você não tem permissão para acessar esta página.", "danger")
+        return redirect(url_for('index'))
+
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Buscar denúncias não resolvidas
+    cursor.execute("SELECT * FROM complaints WHERE is_resolved = FALSE")
+    pending_complaints = cursor.fetchall()
+
+    if request.method == 'POST':
+        complaint_id = request.form.get('complaint_id')
+        # Atualizar denúncia como resolvida
+        cursor.execute("""
+            UPDATE complaints SET is_resolved = TRUE WHERE complaint_id = %s
+        """, (complaint_id,))
+        conn.commit()
+        flash("Denúncia marcada como resolvida!", "success")
+        return redirect(url_for('admin_complaints'))
+
+    cursor.close()
+    conn.close()
+    return render_template('admin_complaints.html', complaints=pending_complaints)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
