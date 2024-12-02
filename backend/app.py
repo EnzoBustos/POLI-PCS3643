@@ -424,7 +424,7 @@ def create_article():
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO articles (title, content, user_id, is_approved)
-            VALUES (%s, %s, %s, 'FALSE')
+            VALUES (%s, %s, %s, 'PENDING')
         """, (title, content, current_user.id))
         conn.commit()
         cursor.close()
@@ -447,7 +447,7 @@ def admin_articles():
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     # Busca os artigos que ainda não foram aprovados
-    cursor.execute("SELECT * FROM articles WHERE is_approved = 'FALSE'")
+    cursor.execute("SELECT * FROM articles WHERE is_approved = 'PENDING'")
     pending_articles = cursor.fetchall()
 
     if request.method == 'POST':
