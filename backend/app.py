@@ -478,12 +478,31 @@ def admin_articles():
 
 @app.route('/wiki')
 def wiki():
+    query = request.args.get('query', '').strip()  # Captura o termo de busca
     conn = connect_db()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-    # Busca todos os artigos aprovados
-    cursor.execute(
-        "SELECT title, content FROM articles WHERE is_approved = 'TRUE'")
+    if query:
+        # Busca os artigos aprovados que correspondem ao termo pesquisado
+        cursor.execute(
+            """
+            SELECT title, content 
+            FROM articles 
+            WHERE is_approved = 'TRUE' AND title ILIKE %s 
+            ORDER BY title ASC
+            """, (f"%{query}%",)
+        )
+    else:
+        # Busca todos os artigos aprovados e ordena por título
+        cursor.execute(
+            """
+            SELECT title, content 
+            FROM articles 
+            WHERE is_approved = 'TRUE' 
+            ORDER BY title ASC
+            """
+        )
+
     articles = cursor.fetchall()
 
     print("Artigos recuperados do banco de dados:", articles)  # Debug
@@ -491,7 +510,7 @@ def wiki():
     cursor.close()
     conn.close()
 
-    return render_template('wiki2.html', articles=articles)
+    return render_template('wiki2.html', articles=articles, query=query)
 
 
 @app.route('/manage_users')
@@ -735,6 +754,43 @@ def delete_article():
 
     flash("Artigo excluído com sucesso.", "success")
     return redirect(url_for('my_articles'))
+
+
+@app.route('/admin_manage_articles', methods=['GET', 'POST'])
+@login_required
+def admin_manage_articles():
+    # Certifica que somente administradores podem acessar
+    if current_user.user_type != 'admin':
+        flash("Você não tem permissão para acessar esta página.", "danger")
+        return redirect(url_for('index'))
+
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+    # Busca todos os artigos no banco de dados
+    cursor.execute("SELECT * FROM articles ORDER BY created_at DESC")
+    articles = cursor.fetchall()
+
+    if request.method == 'POST':
+        action = request.form.get('action')  # 'edit' ou 'delete'
+        article_id = request.form.get('article_id')
+
+        if action == 'delete':
+            try:
+                cursor.execute(
+                    "DELETE FROM articles WHERE article_id = %s", (article_id,))
+                conn.commit()
+                flash("Artigo excluído com sucesso.", "success")
+            except Exception as e:
+                flash(f"Erro ao excluir o artigo: {e}", "danger")
+        elif action == 'edit':
+            # Redireciona para a página de edição do artigo
+            return redirect(url_for('edit_article', article_id=article_id))
+
+    cursor.close()
+    conn.close()
+
+    return render_template('admin_manage_articles.html', articles=articles)
 
 
 if __name__ == "__main__":

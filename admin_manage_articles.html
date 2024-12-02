@@ -243,132 +243,168 @@
         {% endif %}
     </header>
 
-    <style>
-        .search-bar {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .search-form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .search-form input[type="text"] {
-            width: 50%;
-            padding: 8px 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-            margin-right: 8px;
-        }
-
-        .search-form button {
-            padding: 8px 16px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-form button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
     <main class="main">
+        <main class="main">
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f9f9f9;
+                }
 
-        <!-- Page Title -->
-        <div class="page-title" data-aos="fade">
-            <nav class="breadcrumbs">
-                <div class="container">
-                    <ol>
-                        <li><a href="auth-index.html">Home</a></li>
-                        <li class="current"><i>Aedes</i>Wiki</li>
-                    </ol>
-                </div>
-            </nav>
-        </div><!-- End Page Title -->
+                .main-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    padding: 20px;
+                }
 
-        <!-- Wiki Section -->
-        <section id="departments" class="departments section">
+                .articles-table-container {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    max-width: 800px;
+                    width: 100%;
+                }
 
-            <!-- Section Title -->
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Wiki Aedes aegypti</h2>
-                <p>Esta wiki foi criada como parte de um projeto de disciplina, com o objetivo de compartilhar
-                    informações importantes sobre o Aedes aegypti, suas doenças, métodos de prevenção, curiosidades e <a
-                        href="wiki-ciclo.html">ciclo de vida</a>. Navegue pelos tópicos abaixo para aprender mais.</p>
-            </div><!-- End Section Title -->
+                .articles-table-container h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                    color: #333;
+                }
 
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
 
-                <div class="row">
-                    <div class="search-bar container">
-                        <form method="GET" action="{{ url_for('wiki') }}" class="search-form">
-                            <input type="text" name="query" placeholder="Pesquisar artigos..." value="{{ query }}">
-                            <button type="submit">Buscar</button>
-                        </form>
-                    </div>
-                    <!-- Lista de Abas -->
-                    <div class="col-lg-3" style="max-height: 500px; overflow-y: auto;">
-                        <ul class="nav nav-tabs flex-column">
+                table thead tr {
+                    background-color: #007bff;
+                    color: white;
+                }
+
+                table th,
+                table td {
+                    padding: 10px;
+                    text-align: left;
+                    border: 1px solid #ddd;
+                }
+
+                table tbody tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                table tbody tr:hover {
+                    background-color: #e0f7fa;
+                }
+
+                table th {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                .btn {
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    border: none;
+                }
+
+                .btn-warning {
+                    background-color: #ffc107;
+                    color: white;
+                }
+
+                .btn-warning:hover {
+                    background-color: #e0a800;
+                }
+
+                .btn-danger {
+                    background-color: #dc3545;
+                    color: white;
+                }
+
+                .btn-danger:hover {
+                    background-color: #c82333;
+                }
+            </style>
+
+            <div class="main-container">
+                <div class="articles-table-container">
+                    <h1>Gerenciar Artigos</h1>
+
+                    {% if articles %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Conteúdo</th>
+                                <th>Status</th>
+                                <th>Criado em</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {% for article in articles %}
-                            <li class="nav-item">
-                                <a class="nav-link {% if loop.index == 1 %}active show{% endif %}" data-bs-toggle="tab"
-                                    href="#article-tab-{{ loop.index }}">
-                                    {{ article.title }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                            <tr>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.content }}</td>
+                                <td>
+                                    {% if article.is_approved == 'TRUE' %}
+                                    Aprovado
+                                    {% elif article.is_approved == 'REFUSED' %}
+                                    Rejeitado
+                                    {% else %}
+                                    Pendente
+                                    {% endif %}
+                                </td>
+                                <td>{{ article.created_at }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <!-- Botão de Edição -->
+                                        <form method="POST" action="{{ url_for('admin_manage_articles') }}">
+                                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                            <input type="hidden" name="action" value="edit">
+                                            <button type="submit" class="btn btn-warning">Editar</button>
+                                        </form>
 
-                    <!-- Conteúdo das Abas -->
-                    <div class="col-lg-9">
-                        <div class="tab-content">
-                            {% for article in articles %}
-                            <div class="tab-pane {% if loop.index == 1 %}active show{% endif %}"
-                                id="article-tab-{{ loop.index }}">
-                                <div class="row">
-                                    <div class="col-lg-8 details order-2 order-lg-1">
-                                        <h3>{{ article.title }}</h3>
-                                        <div class="formatted-content">
-                                            {{ article.content }}
-                                        </div>
-
+                                        <!-- Botão de Exclusão -->
+                                        <form method="POST" action="{{ url_for('admin_manage_articles') }}">
+                                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                            <input type="hidden" name="action" value="delete">
+                                            <button type="submit" class="btn btn-danger">Excluir</button>
+                                        </form>
                                     </div>
-                                    <div class="col-lg-4 text-center order-1 order-lg-2">
-                                        <img src="assets/img/default-article.jpg" alt="Imagem do Artigo"
-                                            class="img-fluid">
-                                    </div>
-                                </div>
-
-
-                            </div>
+                                </td>
+                            </tr>
                             {% endfor %}
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>Não há artigos cadastrados.</p>
+                    {% endif %}
                 </div>
-
             </div>
-        </section><!-- End Wiki Section -->
+        </main>
 
     </main>
-
-
 
     <footer id="footer" class="footer light-background">
 
         <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="auth-index.html" class="logo d-flex align-items-center">
+                    <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
                         <span class="sitename">Criadores do <em>Aedes</em>Wiki</span>
                     </a>
                     <div class="footer-contact pt-3">
