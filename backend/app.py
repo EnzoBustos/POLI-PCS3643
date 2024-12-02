@@ -43,6 +43,20 @@ class User(UserMixin):
         self.location_id = location_id
         self.user_type = user_type  # Adicione o atributo user_type
 
+    @staticmethod
+    def delete_user_by_id(user_id):
+        conn = connect_db()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("DELETE FROM users WHERE user_id = %s", (user_id,))
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            raise e
+        finally:
+            cursor.close()
+            conn.close()
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -467,13 +481,17 @@ def wiki():
     conn = connect_db()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-    # Busca artigos aprovados
-    cursor.execute("SELECT * FROM articles WHERE is_approved = 'TRUE'")
-    approved_articles = cursor.fetchall()
+    # Busca todos os artigos aprovados
+    cursor.execute(
+        "SELECT title, content FROM articles WHERE is_approved = 'TRUE'")
+    articles = cursor.fetchall()
+
+    print("Artigos recuperados do banco de dados:", articles)  # Debug
 
     cursor.close()
     conn.close()
-    return render_template('wiki2.html', articles=approved_articles)
+
+    return render_template('wiki2.html', articles=articles)
 
 
 @app.route('/manage_users')
@@ -594,6 +612,26 @@ def my_complaints():
     conn.close()
 
     return render_template('my_complaints.html', complaints=complaints)
+
+# Criar o filtro 'nl2br'
+
+
+@app.template_filter('nl2br')
+def nl2br(value):
+    return value.replace('\n', '<br>\n')
+
+
+@app.route('/delete_user', methods=['POST'])
+@login_required
+def delete_user():
+    user_id = request.form.get('user_id')
+    try:
+        User.delete_user_by_id(user_id)
+        flash('Usuário excluído com sucesso!', 'success')
+    except Exception as e:
+        flash(f'Erro ao excluir usuário: {str(e)}', 'danger')
+    return redirect(url_for('manage_users'))
+
 
 
 if __name__ == "__main__":
