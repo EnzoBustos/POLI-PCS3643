@@ -243,118 +243,200 @@
         {% endif %}
     </header>
 
+
     <main class="main">
-        <main class="main">
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: Arial, sans-serif;
-                    background-color: #f9f9f9;
-                }
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+            }
 
-                .main-container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100vh;
-                    padding: 20px;
-                }
+            .main-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
 
-                .articles-table-container {
-                    background-color: white;
-                    padding: 20px;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                    max-width: 800px;
-                    width: 100%;
-                }
+            .articles-table-container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 800px;
+                width: 100%;
+            }
 
-                .articles-table-container h1 {
-                    text-align: center;
-                    margin-bottom: 20px;
-                    font-size: 24px;
-                    color: #333;
-                }
+            .articles-table-container h1 {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: #333;
+            }
 
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-                table thead tr {
-                    background-color: #007bff;
-                    color: white;
-                }
+            table thead tr {
+                background-color: #007bff;
+                color: white;
+            }
 
-                table th,
-                table td {
-                    padding: 10px;
-                    text-align: left;
-                    border: 1px solid #ddd;
-                }
+            table th,
+            table td {
+                padding: 10px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
 
-                table tbody tr:nth-child(even) {
-                    background-color: #f2f2f2;
-                }
+            table tbody tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
 
-                table tbody tr:hover {
-                    background-color: #e0f7fa;
-                }
+            table tbody tr:hover {
+                background-color: #e0f7fa;
+            }
 
-                table th {
-                    font-weight: bold;
-                    text-transform: uppercase;
-                }
+            table th {
+                font-weight: bold;
+                text-transform: uppercase;
+            }
 
-                p {
-                    text-align: center;
-                    font-size: 16px;
-                    color: #666;
-                }
-            </style>
+            .edit-btn {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
 
-            <div class="main-container">
-                <div class="articles-table-container">
-                    <h1>Meus Artigos</h1>
+            .edit-btn:hover {
+                background-color: #0056b3;
+            }
 
-                    {% if articles %}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Conteúdo</th>
-                                <th>Status</th>
-                                <th>Criado em</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for article in articles %}
-                            <tr>
-                                <td>{{ article.title }}</td>
-                                <td>{{ article.content }}</td>
-                                <td>
-                                    {% if article.is_approved == 'TRUE' %}
-                                    Aprovado
-                                    {% elif article.is_approved == 'REFUSED' %}
-                                    Rejeitado
-                                    {% else %}
-                                    Pendente
-                                    {% endif %}
-                                </td>
-                                <td>{{ article.created_at }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <p>Você ainda não criou nenhum artigo.</p>
-                    {% endif %}
-                </div>
+            .delete-btn {
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .delete-btn:hover {
+                background-color: #c82333;
+            }
+
+            p {
+                text-align: center;
+                font-size: 16px;
+                color: #666;
+            }
+
+            /* Ajustar estilo dos botões */
+            .action-buttons {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                /* Espaçamento entre os botões */
+            }
+
+            .action-buttons .btn {
+                font-size: 14px;
+                /* Diminuir o tamanho da fonte */
+                padding: 6px 10px;
+                /* Reduzir o tamanho do botão */
+                border-radius: 5px;
+                /* Bordas arredondadas */
+                cursor: pointer;
+            }
+
+            .btn-warning {
+                background-color: #ffc107;
+                color: #fff;
+                border: none;
+            }
+
+            .btn-warning:hover {
+                background-color: #e0a800;
+            }
+
+            .delete-btn {
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+            }
+
+            .delete-btn:hover {
+                background-color: #c82333;
+            }
+        </style>
+
+        <div class="main-container">
+            <div class="articles-table-container">
+                <h1>Meus Artigos</h1>
+
+                {% if articles %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Conteúdo</th>
+                            <th>Status</th>
+                            <th>Criado em</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                        <tr>
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.content }}</td>
+                            <td>
+                                {% if article.is_approved == 'TRUE' %}
+                                Aprovado
+                                {% elif article.is_approved == 'REFUSED' %}
+                                Rejeitado
+                                {% else %}
+                                Pendente
+                                {% endif %}
+                            </td>
+                            <td>{{ article.created_at }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <!-- Botão de Edição -->
+                                    <a href="{{ url_for('edit_article', article_id=article.article_id) }}"
+                                        class="btn btn-warning">Editar</a>
+
+                                    <!-- Botão de Exclusão -->
+                                    <form method="POST" action="{{ url_for('delete_article') }}"
+                                        style="display:inline;">
+                                        <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                        <button type="submit" class="btn delete-btn">Excluir</button>
+                                    </form>
+                                </div>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Você ainda não criou nenhum artigo.</p>
+                {% endif %}
             </div>
-        </main>
-
+        </div>
     </main>
+
+
 
     <footer id="footer" class="footer light-background">
 

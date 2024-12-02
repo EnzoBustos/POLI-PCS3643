@@ -572,25 +572,23 @@ def admin_complaints():
     return render_template('admin_complaints.html', complaints=pending_complaints)
 
 
-@app.route('/my_articles')
+@app.route('/my_articles', methods=['GET'])
 @login_required
 def my_articles():
-    conn = connect_db()
-    cursor = conn.cursor(cursor_factory=RealDictCursor)
-
-    # Recupera os artigos criados pelo usuário logado
-    cursor.execute("""
-        SELECT title, content, is_approved, created_at 
-        FROM articles 
-        WHERE user_id = %s
-        ORDER BY created_at DESC
-    """, (current_user.id,))
-    articles = cursor.fetchall()
-
-    cursor.close()
-    conn.close()
-
-    return render_template('my_articles.html', articles=articles)
+    try:
+        conn = connect_db()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(
+            "SELECT article_id, title, content, created_at, is_approved FROM articles WHERE user_id = %s",
+            (current_user.id,)
+        )
+        articles = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('my_articles.html', articles=articles)
+    except Exception as e:
+        flash(f"Erro ao carregar artigos: {e}", "danger")
+        return render_template('my_articles.html', articles=[])
 
 
 @app.route('/my_complaints')
@@ -632,6 +630,111 @@ def delete_user():
         flash(f'Erro ao excluir usuário: {str(e)}', 'danger')
     return redirect(url_for('manage_users'))
 
+
+@app.route('/edit_article', methods=['GET', 'POST'])
+@login_required
+def edit_article():
+    if request.method == 'GET':
+        # Obter o ID do artigo da query string
+        article_id = request.args.get('article_id')
+
+        if not article_id:
+            flash("ID do artigo não fornecido ou inválido.", "danger")
+            return redirect(url_for('my_articles'))
+
+        # Buscar o artigo no banco de dados
+        try:
+            conn = connect_db()
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
+            cursor.execute(
+                "SELECT * FROM articles WHERE article_id = %s AND user_id = %s",
+                (article_id, current_user.id)
+            )
+            article = cursor.fetchone()
+            cursor.close()
+            conn.close()
+
+            if not article:
+                flash(
+                    "Artigo não encontrado ou você não tem permissão para editá-lo.", "danger")
+                return redirect(url_for('my_articles'))
+
+            # Renderizar a página de edição
+            return render_template('edit_article.html', article=article)
+        except Exception as e:
+            flash(f"Erro ao carregar o artigo: {e}", "danger")
+            return redirect(url_for('my_articles'))
+
+    elif request.method == 'POST':
+        # Obter os dados do formulário para atualizar o artigo
+        article_id = request.form.get('article_id')
+        new_title = request.form.get('new_title')
+        new_content = request.form.get('new_content')
+
+        if not article_id:
+            flash("ID do artigo não fornecido ou inválido.", "danger")
+            return redirect(url_for('my_articles'))
+
+        try:
+            conn = connect_db()
+            cursor = conn.cursor()
+            cursor.execute(
+                "UPDATE articles SET title = %s, content = %s, is_approved = 'PENDING' WHERE article_id = %s AND user_id = %s",
+                (new_title, new_content, article_id, current_user.id)
+            )
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            flash("Artigo editado com sucesso e enviado para aprovação.", "success")
+        except Exception as e:
+            flash(f"Erro ao editar o artigo: {e}", "danger")
+
+        return redirect(url_for('my_articles'))
+
+
+@app.route('/update_article', methods=['POST'])
+@login_required
+def update_article():
+    article_id = request.form['article_id']
+    title = request.form['title']
+    content = request.form['content']
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    # Atualiza o artigo no banco e define como pendente
+    cursor.execute("""
+        UPDATE articles
+        SET title = %s, content = %s, status = 'pending'
+        WHERE article_id = %s
+    """, (title, content, article_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Artigo atualizado e enviado para aprovação.", "success")
+    return redirect(url_for('manage_articles'))
+
+
+@app.route('/delete_article', methods=['POST'])
+@login_required
+def delete_article():
+    article_id = request.form.get('article_id')
+
+    if not article_id:
+        flash("ID do artigo não fornecido.", "danger")
+        return redirect(url_for('my_articles'))
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM articles WHERE article_id = %s AND user_id = %s",
+                   (article_id, current_user.id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Artigo excluído com sucesso.", "success")
+    return redirect(url_for('my_articles'))
 
 
 if __name__ == "__main__":
