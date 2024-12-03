@@ -275,15 +275,38 @@
   
           <div class="row gy-4 gx-5">
   
-            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                <img src="assets/img/Sisaweb(1).png" class="img-fluid" alt="Imagem 1" style="width: calc(33.33% - 10px);">
-                <img src="assets/img/Sisaweb(2).png" class="img-fluid" alt="Imagem 2" style="width: calc(33.33% - 10px);">
-                <img src="assets/img/Sisaweb(3).png" class="img-fluid" alt="Imagem 3" style="width: calc(33.33% - 10px);">
+            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200" style="display: flex; flex-direction: column; align-items: center;">
+                <!-- Botões de navegação -->
+                <div>
+                  <button onclick="showImage(1)">Imagem 1</button>
+                  <button onclick="showImage(2)">Imagem 2</button>
+                  <button onclick="showImage(3)">Imagem 3</button>
+                </div>
+                
+                <!-- Imagens -->
+                <div id="imageContainer" style="width: 100%; display: flex; justify-content: center;">
+                  <img id="img1" src="assets/img/Sisaweb(1).png" class="img-fluid" alt="Imagem 1" style="display: none; width: calc(100%);">
+                  <img id="img2" src="assets/img/Sisaweb(2).png" class="img-fluid" alt="Imagem 2" style="display: none; width: calc(100%);">
+                  <img id="img3" src="assets/img/Sisaweb(3).png" class="img-fluid" alt="Imagem 3" style="display: none; width: calc(100%);">
+                </div>
               </div>
               
-              
-              
-  
+              <script>
+                // Função para exibir a imagem com base no índice
+                function showImage(imageNumber) {
+                  // Ocultar todas as imagens
+                  document.getElementById('img1').style.display = 'none';
+                  document.getElementById('img2').style.display = 'none';
+                  document.getElementById('img3').style.display = 'none';
+                  
+                  // Mostrar a imagem escolhida
+                  document.getElementById('img' + imageNumber).style.display = 'block';
+                }
+                
+                // Exibir a primeira imagem por padrão
+                showImage(1);
+              </script>
+
             <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
               <h3>Sobre os dados</h3>
               <p>
