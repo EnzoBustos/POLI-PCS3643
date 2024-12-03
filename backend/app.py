@@ -319,19 +319,39 @@ def get_news_id_by_title(title):
 
 @app.route('/dengue_news')
 def dengue_news():
-    # Busca notícias na API e as insere no banco
-    fetch_dengue_news()
+    page = request.args.get('page', 1, type=int)
+    per_page = 5  # Número de artigos por página
+    offset = (page - 1) * per_page
 
-    # Recupera notícias do banco de dados
-    db_articles = get_articles_from_db()
-    print("Artigos recuperados do banco de dados:", db_articles)
+    conn = connect_db()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-    # Adiciona comentários (se o usuário estiver logado)
-    for article in db_articles:
+    # Busca artigos paginados
+    cursor.execute("""
+        SELECT new_id, title, summary, url
+        FROM news
+        ORDER BY created_at DESC
+        LIMIT %s OFFSET %s
+    """, (per_page, offset))
+    articles = cursor.fetchall()
+
+    # Adiciona comentários para cada artigo
+    for article in articles:
         article_id = article['new_id']
-        article['comments'] = get_comments(article_id)
+        article['comments'] = get_comments(
+            article_id)  # Busca comentários associados
 
-    return render_template('dengue_news.html', articles=db_articles)
+    # Conta o total de artigos para paginação
+    cursor.execute("SELECT COUNT(*) FROM news")
+    total_articles = cursor.fetchone()['count']
+
+    cursor.close()
+    conn.close()
+
+    # Calcula o número total de páginas
+    total_pages = (total_articles + per_page - 1) // per_page
+
+    return render_template('dengue_news.html', articles=articles, page=page, total_pages=total_pages)
 
 
 def get_comments(article_id):
@@ -792,6 +812,14 @@ def admin_manage_articles():
 
     return render_template('admin_manage_articles.html', articles=articles)
 
+
+@app.route('/mapas_sisaweb')
+def mapas_sisaweb():
+    return render_template('sisaweb.html')
+
+@app.route('/infos_essenciais')
+def info_essenciais():
+    return render_template('infos_essenciais.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
