@@ -281,8 +281,10 @@
         }
 
         .formatted-content {
+            text-align: justify;
             white-space: pre-line;
-            /* Respeitar quebras de linha */
+            /* Respeita as quebras de linha */
+            text-indent: 0;
         }
 
 
@@ -325,8 +327,8 @@
             <div class="container section-title" data-aos="fade-up">
                 <h2>Wiki Aedes aegypti</h2>
                 <p>Esta wiki foi criada como parte de um projeto de disciplina, com o objetivo de compartilhar
-                    informações importantes sobre o Aedes aegypti, suas doenças, métodos de prevenção, curiosidades e
-                    ciclo de vida. Navegue pelos tópicos abaixo para aprender mais.</p>
+                    informações importantes sobre o Aedes aegypti, suas doenças, métodos de prevenção, curiosidades e <a
+                        href="wiki-ciclo.html">ciclo de vida</a>. Navegue pelos tópicos abaixo para aprender mais.</p>
                 <!-- "Informações essenciais" abaixo do título -->
                 <div class="info-link">
                     <a href="{{ url_for('info_essenciais') }}">Informações essenciais</a>
