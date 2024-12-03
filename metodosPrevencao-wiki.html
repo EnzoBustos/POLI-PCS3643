@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>AedesWiki</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
+
+  <!-- Favicons -->
+  <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
+  <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+
+  <!-- Preload para otimização -->
+  <link rel="preload" href="assets/css/main.css" as="style">
+  <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
+  <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header sticky-top">
+
+    <div class="topbar d-flex align-items-center">
+
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <!--Info de Contato à Esquerda-->
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope-open d-flex align-items-center">
+            <a href="mailto:aedeswiki@exemplo.gov" target="_blank" rel="noopener noreferrer">
+              aedeswiki@exemplo.gov
+            </a>
+          </i>
+          <i class="bi bi-telephone d-flex align-items-center ms-4">
+            <a href="https://wa.link/qx23r2" target="_blank" rel="noopener noreferrer">
+              +55 (11) 91234-5678
+            </a>
+          </i>
+          <i class="bi bi-link-45deg d-flex align-items-center ms-4">
+            <a href="https://enzobustos.github.io/POLI-PCS3643/" target="_blank" rel="noopener noreferrer">
+              enzobustos.github.io/POLI-PCS3643/
+            </a>
+          </i>
+        </div>
+        <!--Ícones de Media à direita-->
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="tiktok.com" target="_blank" class="tiktok">
+            <i class="bi bi-tiktok"></i>
+          </a>
+          <a href="whatsapp.com" target="_blank" class="whatsapp">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <a href="discord.com" target="_blank" class="discord">
+            <i class="bi bi-discord"></i>
+          </a>
+          <a href="x.com" target="_blank" class="twitter">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          <a href="facebook.com" target="_blank" class="facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="instagram.com" target="_blank" class="instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="linkedin.com" target="_blank" class="linkedin">
+            <i class="bi bi-linkedin"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="auth-index.html" class="logo d-flex align-items-center me-auto">
+          <img src="assets/img/LogoAedesWiki.png" alt="">
+          <h1 class="sitename">
+            <em>Aedes</em>Wiki
+          </h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+
+          <ul>
+            <li><a href="./auth-index.html" class="active">Página inicial<br></a></li>
+            <li class="dropdown">
+              <a href="./auth-index.html#sobre">
+                <span>
+                  Informações
+                </span>
+                <i class="bi bi-chevron-down toggle-dropdown"></i>
+              </a>
+              <ul>
+                <li><a href="./auth-index.html#sobre">Mosquito</a></li>
+                <li><a href="./auth-index.html#services">Ações de Prevenção</a></li>
+                <li><a href="./auth-index.html#faq">Perguntas Frequentes</a></li>
+                <li><a href="./auth-index.html#gallery">Galeria</a></li>
+                <li><a href="./auth-index.html#footer">Criadores da Wiki</a></li>
+              </ul>
+            </li>
+            <li><a href="./news.html">Notícias</a></li>
+            <li><a href="./report.html">Denuncie</a></li>
+            <li class="dropdown">
+              <a href="./profile.html">
+                <span>
+                  Sua página
+                </span>
+                <i class="bi bi-person-circle"></i>
+              </a>
+              <ul>
+                <li><a href="./profile.html">Meu Perfil</a></li>
+                <li><a href="./posts.html">Minhas Publicações</a></li>
+                <li><a href="./friends-list.html">Lista de Amigos</a></li>
+                <li><a href="./settings.html">Configurações</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <!--Não mexer nisso-->
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="./wiki.html">
+          <i class="fa-solid fa-mosquito" style="margin-right: 0.5em;"></i>
+          <span>Acesse a Wiki</span>
+          <i class="fa-solid fa-mosquito" style="margin-left: 0.5em;"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="auth-index.html">Home</a></li>
+            <li><a href="wiki.html">Wiki</a></li>
+            <li class="current">Template Page</li>
+          </ol>
+        </div>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <div class="wiki-page">
+      <!-- Sidebar navigation -->
+      <nav class="sidebar">
+        <ul>
+          <li><a href="#descricao">Descrição</a></li>
+          <li><a href="#classificacao">Classificação Científica</a></li>
+          <li><a href="#habitat">Habitat e Distribuição</a></li>
+          <li><a href="#reproducao">Reprodução</a></li>
+          <li><a href="#doencas">Doenças Transmitidas</a></li>
+          <li><a href="#controle">Métodos de Controle</a></li>
+          <li><a href="#prevencao">Prevenção</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main content area -->
+      <div class="main-content">
+
+
+        <!-- Section: Aedes aegypti -->
+        <section id="aedes-info" class="section">
+          <div class="titulo-principal clearfix">
+            <h1 class="titulo">Aedes aegypti</h1>
+            <hr class="linha-divisoria">
+            <div class="subtitulo">
+              <p>O <em>Aedes aegypti</em>, conhecido como mosquito da febre amarela, é um vetor de várias doenças virais
+                graves, como dengue, zika, chikungunya e febre amarela. Ele é identificado pelas marcas pretas e brancas
+                em suas pernas e uma marca em forma de lira no tórax.</p>
+            </div>
+          </div>
+
+          <div class="container">
+            <h2 class="subtitulo-secao" id="descricao">Descrição</h2>
+            <hr class="linha-divisoria-subtitulo">
+
+            <p>O <em>Aedes aegypti</em>, popularmente conhecido como o mosquito da febre amarela, é uma espécie de
+              mosquito originária da África que, devido à globalização, comércio internacional e urbanização, se
+              disseminou amplamente para regiões tropicais, subtropicais e até mesmo temperadas em todo o mundo. Este
+              mosquito apresenta dimensões reduzidas, variando de 4 a 7 milímetros de comprimento, o que facilita sua
+              mobilidade em ambientes urbanos. Ele é facilmente reconhecido pela coloração predominante preta em seu
+              corpo, ornamentada com marcas brancas distintas que conferem um padrão característico, incluindo listras
+              nas pernas e uma marca em forma de lira no dorso do tórax. A distinção sexual é notável: as fêmeas são
+              ligeiramente maiores do que os machos e desempenham o papel ativo na alimentação sanguínea, essencial para
+              a maturação de seus ovos. Os machos, por outro lado, têm hábitos alimentares restritos à ingestão de seiva
+              vegetal e néctar de flores, não sendo vetores de doenças. Este comportamento das fêmeas é guiado por
+              estímulos químicos e térmicos provenientes de seus hospedeiros, geralmente humanos, devido à expressão de
+              receptores sensoriais específicos que as atraem para compostos como dióxido de carbono, ácido lático e
+              amônia, frequentemente presentes na transpiração humana. Tal adaptação faz do <em>Aedes aegypti</em> um
+              vetor altamente eficiente de doenças virais, além de uma espécie profundamente adaptada ao convívio com o
+              ambiente antropogênico, prosperando em áreas densamente povoadas e com acúmulo de água parada, que serve
+              como criadouro para suas larvas.</p>
+            <img src="assets/img/wiki/aedes-aegypti/aedes-1.jpg" alt="Imagem do mosquito Aedes aegypti"
+              class="img-fluid" style="max-width: 400px;">
+            <p class="caption">Figura 1: Imagem detalhada do mosquito <em>Aedes aegypti</em>.</p>
+
+            <h2 id="habitat">Habitat e Distribuição</h2>
+            <p>Originalmente restrito às regiões tropicais da África, o <em>Aedes aegypti</em> encontrou condições
+              favoráveis para se espalhar globalmente, especialmente ao longo dos últimos séculos, devido à
+              intensificação do comércio marítimo e à crescente urbanização. O mosquito adaptou-se de forma notável às
+              áreas urbanas, onde utiliza recipientes artificiais, como pneus, caixas d'água, latas e outros
+              reservatórios, para depositar seus ovos e completar seu ciclo reprodutivo. Este ambiente antropogênico,
+              muitas vezes caracterizado pelo acúmulo de água parada, proporciona um habitat ideal para sua
+              proliferação.
+
+              Além disso, mudanças climáticas globais têm desempenhado um papel crucial na ampliação de sua distribuição
+              geográfica. Com o aumento das temperaturas médias, o <em>Aedes aegypti</em> conseguiu colonizar novas
+              áreas, incluindo regiões subtropicais e temperadas, onde antes sua sobrevivência era limitada por
+              condições climáticas adversas. Atualmente, sua presença é registrada em praticamente todos os continentes
+              habitados, com maior concentração em zonas urbanas de países em desenvolvimento, onde as condições de
+              saneamento básico são insuficientes para conter sua proliferação. Este fenômeno representa um desafio
+              significativo para o controle de doenças transmitidas por este vetor.</p>
+
+            <img src="assets/img/wiki/aedes-aegypti/distribuicao.jpg" alt="Distribuição global do Aedes aegypti"
+              class="img-fluid" style="max-width: 400px;">
+            <p class="caption">Figura 2: Distribuição global estimada do <em>Aedes aegypti</em>.</p>
+
+            <h2 id="reproducao">Reprodução</h2>
+            <p>O ciclo reprodutivo do <em>Aedes aegypti</em> é altamente eficiente e adaptado para garantir a
+              sobrevivência em condições adversas. As fêmeas, que necessitam de sangue para maturar seus ovos, podem
+              depositar até 300 ovos por ciclo reprodutivo, sendo que cada ciclo pode ocorrer a cada poucos dias,
+              dependendo da disponibilidade de alimento e das condições ambientais. Esses ovos possuem uma resistência
+              notável: podem permanecer viáveis por mais de um ano em ambientes secos, aguardando as condições ideais de
+              umidade para eclodirem. Esta capacidade permite que populações de mosquitos ressurgam rapidamente após
+              períodos de seca ou outras adversidades ambientais.
+
+              Os ovos são geralmente depositados separadamente, em locais onde a água se acumula, como bordas de
+              recipientes artificiais, pneus, caixas d'água, pratos de vasos de plantas e outros reservatórios. Essa
+              estratégia de dispersão reduz os riscos de predação em massa e aumenta as chances de sobrevivência das
+              larvas. Ao entrar em contato com a água, os ovos eclodem rapidamente, iniciando o desenvolvimento das
+              larvas, que se alimentarão de matéria orgânica presente no ambiente aquático. Este ciclo reprodutivo
+              eficaz, combinado com sua alta taxa de reprodução, torna o <em>Aedes aegypti</em> um dos vetores mais
+              difíceis de controlar em áreas urbanas e suburbanas.</p>
+
+            <img src="assets/img/wiki/aedes-aegypti/ciclo-de-vida-3.jpg" alt="Ciclo de vida do Aedes aegypti"
+              class="img-fluid" style="max-width: 400px;">
+            <p class="caption">Figura 3: Ciclo de vida do <em>Aedes aegypti</em>.</p>
+
+            <h2 id="doencas">Doenças Transmitidas</h2>
+            <ul>
+              <li><strong>Dengue:</strong> Uma doença viral transmitida pelo <em>Aedes aegypti</em>, caracterizada por
+                febre alta súbita, dores musculares intensas, dor retro-orbital, erupções cutâneas e mal-estar geral. Em
+                casos graves, pode evoluir para a forma hemorrágica, que inclui sangramentos espontâneos,
+                comprometimento dos órgãos vitais e choque, podendo levar à morte sem tratamento adequado.</li>
+              <li><strong>Zika:</strong> Outra infecção viral transmitida por este vetor, geralmente associada a
+                sintomas leves, como febre baixa, erupções cutâneas, conjuntivite e dores musculares. Contudo, sua maior
+                preocupação está relacionada aos efeitos congênitos, como a microcefalia em bebês nascidos de mães
+                infectadas durante a gestação, além de outras complicações neurológicas, como a Síndrome de
+                Guillain-Barré.</li>
+              <li><strong>Chikungunya:</strong> Uma doença caracterizada por febre alta e dores articulares intensas e
+                debilitantes, que podem persistir por semanas, meses ou até anos em casos crônicos. A infecção também
+                pode causar erupções cutâneas, fadiga e dores musculares, sendo especialmente grave em populações mais
+                vulneráveis, como idosos.</li>
+              <li><strong>Febre Amarela:</strong> Uma doença viral grave e potencialmente letal, marcada por febre alta,
+                calafrios, dores de cabeça, náuseas e vômitos. Em sua forma severa, pode levar a icterícia (coloração
+                amarelada da pele), hemorragias internas e insuficiência de múltiplos órgãos. Apesar de ser controlada
+                em muitas regiões por meio da vacinação, surtos ainda ocorrem em áreas endêmicas.</li>
+            </ul>
+
+
+            <h2 id="controle">Métodos de Controle</h2>
+            <p>As estratégias de controle do <em>Aedes aegypti</em> incluem uma combinação de métodos químicos,
+              biológicos e tecnológicos voltados para a redução das populações do mosquito e a prevenção de surtos de
+              doenças. O uso de inseticidas continua sendo uma prática comum, aplicada diretamente em criadouros e áreas
+              de alta infestação. No entanto, o uso indiscriminado pode levar ao desenvolvimento de resistência nos
+              mosquitos, reduzindo sua eficácia. Tecnologias inovadoras incluem a liberação de mosquitos geneticamente
+              modificados, projetados para produzir descendentes inviáveis, o que ajuda a diminuir a população ao longo
+              do tempo. Outra abordagem promissora é a introdução da bactéria simbiótica <em>Wolbachia</em>, que
+              interfere na capacidade do mosquito de transmitir vírus como dengue, zika e chikungunya. Além disso,
+              campanhas de conscientização e educação comunitária têm um papel fundamental no controle ambiental,
+              incentivando a eliminação de criadouros em áreas urbanas e a adoção de práticas preventivas.</p>
+
+
+            <h2 id="prevencao">Prevenção</h2>
+            <p>Prevenção envolve eliminar criadouros, usar repelentes com DEET e instalar telas e mosquiteiros. É
+              fundamental promover a conscientização e realizar ações comunitárias para controle ambiental.</p>
+            <img src="assets/img/wiki/aedes-aegypti/locais-de-reprodução-1.jpeg"
+              alt="Locais comuns de reprodução do Aedes aegypti" class="img-fluid" style="max-width: 400px;">
+            <p class="caption">Figura 4: Locais preferidos de reprodução do <em>Aedes aegypti</em>. O mosquito utiliza
+              uma ampla variedade de recipientes com água parada para a oviposição, como pneus, caixas d'água
+              destampadas, vasos de plantas e outros objetos descartados no ambiente urbano. Esses criadouros
+              artificiais, amplamente presentes em áreas urbanizadas, oferecem condições ideais para o desenvolvimento
+              das larvas, especialmente em regiões com climas tropicai
+
+          </div>
+        </section>
+
+        <!-- Infocaixa -->
+        <aside class="infocaixa">
+          <h2 class="infocaixa-titulo">Classificação Científica</h2>
+          <div class="info-bloco">
+            <img src="assets/img/wiki/aedes-aegypti/adulto.jpg" alt="Adulto Aedes aegypti" class="info-imagem">
+            <p class="info-legenda">Figura 1: Adulto <em>Aedes aegypti</em>.</p>
+            <img src="assets/img/wiki/aedes-aegypti/larva.jpg" alt="Larva Aedes aegypti" class="info-imagem">
+            <p class="info-legenda">Figura 2: Larva <em>Aedes aegypti</em>.</p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Domínio</h3>
+            <p class="info-detalhe"><strong>Eukaryota</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Reino</h3>
+            <p class="info-detalhe"><strong>Animalia</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Filo</h3>
+            <p class="info-detalhe"><strong>Arthropoda</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Classe</h3>
+            <p class="info-detalhe"><strong>Insecta</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Ordem</h3>
+            <p class="info-detalhe"><strong>Diptera</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Família</h3>
+            <p class="info-detalhe"><strong>Culicidae</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Gênero</h3>
+            <p class="info-detalhe"><strong>Aedes</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Subgênero</h3>
+            <p class="info-detalhe"><strong>Stegomyia</strong></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Espécie</h3>
+            <p class="info-detalhe"><em>Aedes aegypti</em></p>
+          </div>
+          <div class="info-bloco">
+            <h3 class="info-categoria">Subespécies</h3>
+            <ul class="info-lista">
+              <li><em>Aedes aegypti aegypti</em></li>
+              <li><em>Aedes aegypti formosus</em></li>
+            </ul>
+          </div>
+        </aside>
+
+        <style>
+          .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+          }
+
+          /* Layout geral da página */
+          .wiki-page {
+            display: flex;
+            /* Flexbox pode ser útil se for necessário, mas pode ser removido se o layout for fixo */
+            font-family: Arial, sans-serif;
+          }
+
+          /* Sidebar: barra lateral fixa */
+          .sidebar {
+            width: 20%;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-right: 1px solid #ddd;
+            height: 100%;
+            position: fixed;
+            overflow-y: auto;
+          }
+
+          /* Lista de navegação na barra lateral */
+          .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+          }
+
+          .sidebar ul li {
+            margin: 10px 0;
+          }
+
+          .sidebar ul li a {
+            text-decoration: none;
+            color: #007bff;
+          }
+
+          /* Conteúdo principal da página */
+          .main-content {
+            margin-left: 22%;
+            /* Margem para que o conteúdo fique ao lado da barra lateral */
+            width: 78%;
+            /* Ocupa o restante do espaço */
+            padding: 20px;
+            /* Espaçamento interno */
+            display: flex;
+            /* Adiciona o Flexbox */
+            flex-direction: row;
+            /* Organiza os itens em linha */
+            align-items: flex-start;
+            /* Alinha os itens no topo */
+          }
+
+          /* Ajuste do contêiner principal do título */
+          .titulo-principal {
+            overflow: hidden;
+            text-align: left;
+            margin: 0;
+            /* Remove todas as margens */
+            padding: 0;
+            /* Remove qualquer preenchimento */
+          }
+
+          /* Ajuste do título principal (h1) */
+          .titulo-principal h1 {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            /* Remove todas as margens */
+            padding: 0;
+            /* Remove qualquer preenchimento */
+          }
+
+          /* Linha divisória após o título */
+          .linha-divisoria {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 10px 0;
+            /* Espaço ajustado entre o título e a linha */
+            padding: 0;
+            /* Remove qualquer preenchimento */
+            width: 100%;
+            /* Linha ocupa toda a largura */
+          }
+
+
+          /* Subtítulo da seção */
+          .subtitulo-secao {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            /* Espaço entre o subtítulo e o conteúdo */
+          }
+
+          /* Linha divisória abaixo dos subtítulos */
+          .linha-divisoria-subtitulo {
+            border: 0;
+            border-top: 1px solid #ddd;
+            margin: 0 0 15px 0;
+            /* Ajuste o espaçamento inferior */
+            width: 100%;
+          }
+
+          /* Infocaixa */
+          .infocaixa {
+            width: 300px;
+            /* Largura fixa */
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+            flex: 0 0 300px;
+            /* Largura fixa da infocaixa */
+            margin-left: 20px;
+            /* Espaço entre a infocaixa e o conteúdo principal */
+          }
+
+          .infocaixa-titulo {
+            text-align: center;
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+          }
+
+          .info-bloco {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #ffffff;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+          }
+
+          .info-bloco:nth-child(even) {
+            background-color: #f0f0f0;
+          }
+
+          .info-categoria {
+            font-size: 1em;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+          }
+
+          .info-detalhe {
+            font-size: 0.9em;
+            color: #333;
+            margin: 0;
+          }
+
+          .info-lista {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+          }
+
+          .info-lista li {
+            font-size: 0.9em;
+            color: #333;
+          }
+
+          /* Ajustes gerais */
+          .container {
+            margin-bottom: 20px;
+            flex: 1;
+            /* Faz o conteúdo principal ocupar o espaço restante */
+          }
+
+          .caption {
+            font-size: 0.9em;
+            text-align: center;
+            color: #555;
+          }
+        </style>
+
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="auth-index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Criadores do <em>Aedes</em>Wiki</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Alunos da Escola Politécnica da USP</p>
+            <p>Disciplina da Graduação da PCS3643</p>
+            <p>Laboratório de Engenharia De Software</p>
+            <p class="mt-3">
+              <strong>Telefone:</strong>
+              <a href="wa.me"><span>
+                  +55 (11) 91234-5678
+                </span></a>
+            </p>
+            <p><strong>E-mail:</strong> <span><a href="maito:aedeswiki@exemplo.gov" target="_blank">
+                  aedeswiki@exemplo.gov
+                </a></span></p>
+            <p><strong>Website:</strong><span><a href="enzobustos.github.io/POLI-PCS3643/">
+                  enzobustos.github.io/POLI-PCS3643/
+                </a></span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Adrian Oliveira</h4>
+          <ul>
+            <li>Eng. Computação - 6° Período</li>
+            <li>Foco em Desenv. Back End</li>
+            <li>Desenvolvedor em Kotlin</li>
+            <li> </li>
+          </ul>
+          <div class="social-links d-flex mt-4">
+            <a href="https://wa.link/bfx35e" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/in/enzo-bustos/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="mailto:enzobustos@usp.br" target="_blank"><i class="bi bi-envelope-at"></i></a>
+            <a href="https://github.com/EnzoBustos" target="_blank"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Antônio Fassini</h4>
+          <ul>
+            <li>Eng. Computação - 6° Período</li>
+            <li>Foco em Inteligência Artificial</li>
+            <li>Desenvolvedor em Python</li>
+            <li>Três artigos publicados</li>
+          </ul>
+          <div class="social-links d-flex mt-4">
+            <a href="https://wa.link/bfx35e" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/in/enzo-bustos/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="mailto:enzobustos@usp.br" target="_blank"><i class="bi bi-envelope-at"></i></a>
+            <a href="https://github.com/EnzoBustos" target="_blank"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Bruno Schio</h4>
+          <ul>
+            <li>Eng. Computação - 6° Período</li>
+            <li>Foco em Inteligência Artificial</li>
+            <li>Desenvolvedor em Python</li>
+            <li>Três artigos publicados</li>
+          </ul>
+          <div class="social-links d-flex mt-4">
+            <a href="https://wa.link/bfx35e" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/in/enzo-bustos/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="mailto:enzobustos@usp.br" target="_blank"><i class="bi bi-envelope-at"></i></a>
+            <a href="https://github.com/EnzoBustos" target="_blank"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Enzo Bustos</h4>
+          <ul>
+            <li>Eng. Elétrica - 8° Período</li>
+            <li>Foco em Inteligência Artificial</li>
+            <li>Desenvolvedor em Python</li>
+            <li>Três artigos publicados</li>
+          </ul>
+          <div class="social-links d-flex mt-4">
+            <a href="https://wa.link/bfx35e" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/in/enzo-bustos/" target="_blank"><i class="bi bi-linkedin"></i></a>
+            <a href="mailto:enzobustos@usp.br" target="_blank"><i class="bi bi-envelope-at"></i></a>
+            <a href="https://github.com/EnzoBustos" target="_blank"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Habilitar o Botão de Libras -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+</body>
+
+</html>
