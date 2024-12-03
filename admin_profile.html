@@ -244,6 +244,82 @@
     </header>
 
     <main class="main">
+        <main class="main">
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f9f9f9;
+                }
+
+                .profile-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    padding: 20px;
+                }
+
+                .profile-content {
+                    background-color: white;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    max-width: 600px;
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .profile-content h1 {
+                    font-size: 24px;
+                    color: #333;
+                    margin-bottom: 20px;
+                }
+
+                .profile-content p {
+                    font-size: 16px;
+                    color: #555;
+                    margin: 10px 0;
+                }
+
+                .profile-content p strong {
+                    color: #000;
+                }
+
+                .profile-content a {
+                    display: block;
+                    margin: 10px 0;
+                    font-size: 16px;
+                    text-decoration: none;
+                    color: #fff;
+                    background-color: #007bff;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                }
+
+                .profile-content a:hover {
+                    background-color: #0056b3;
+                }
+            </style>
+
+            <div class="profile-container">
+                <div class="profile-content">
+                    <h1>Perfil de Administrador</h1>
+                    <p><strong>Nome de Usuário:</strong> {{ user_info.username }}</p>
+                    <p><strong>E-mail:</strong> {{ user_info.email }}</p>
+                    <p><strong>Tipo de Usuário:</strong> Administrador</p>
+
+                    <!-- Links adicionais para administradores -->
+                    <a href="{{ url_for('admin_manage_articles') }}">Gerenciar Artigos</a>
+                    <a href="{{ url_for('manage_users') }}">Gerenciar Usuários</a>
+                    <a href="{{ url_for('admin_complaints') }}">Ver Denúncias</a>
+                    <a href="{{ url_for('admin_articles') }}">Artigos a serem aprovados</a>
+                </div>
+            </div>
+        </main>
+
     </main>
 
     <footer id="footer" class="footer light-background">

@@ -244,6 +244,159 @@
     </header>
 
     <main class="main">
+        <main class="main">
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #f9f9f9;
+                }
+
+                .main-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    padding: 20px;
+                }
+
+                .articles-table-container {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    max-width: 800px;
+                    width: 100%;
+                }
+
+                .articles-table-container h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                    color: #333;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                table thead tr {
+                    background-color: #007bff;
+                    color: white;
+                }
+
+                table th,
+                table td {
+                    padding: 10px;
+                    text-align: left;
+                    border: 1px solid #ddd;
+                }
+
+                table tbody tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                table tbody tr:hover {
+                    background-color: #e0f7fa;
+                }
+
+                table th {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                .btn {
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    border: none;
+                }
+
+                .btn-warning {
+                    background-color: #ffc107;
+                    color: white;
+                }
+
+                .btn-warning:hover {
+                    background-color: #e0a800;
+                }
+
+                .btn-danger {
+                    background-color: #dc3545;
+                    color: white;
+                }
+
+                .btn-danger:hover {
+                    background-color: #c82333;
+                }
+            </style>
+
+            <div class="main-container">
+                <div class="articles-table-container">
+                    <h1>Gerenciar Artigos</h1>
+
+                    {% if articles %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Conteúdo</th>
+                                <th>Status</th>
+                                <th>Criado em</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for article in articles %}
+                            <tr>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.content }}</td>
+                                <td>
+                                    {% if article.is_approved == 'TRUE' %}
+                                    Aprovado
+                                    {% elif article.is_approved == 'REFUSED' %}
+                                    Rejeitado
+                                    {% else %}
+                                    Pendente
+                                    {% endif %}
+                                </td>
+                                <td>{{ article.created_at }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <!-- Botão de Edição -->
+                                        <form method="POST" action="{{ url_for('admin_manage_articles') }}">
+                                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                            <input type="hidden" name="action" value="edit">
+                                            <button type="submit" class="btn btn-warning">Editar</button>
+                                        </form>
+
+                                        <!-- Botão de Exclusão -->
+                                        <form method="POST" action="{{ url_for('admin_manage_articles') }}">
+                                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                            <input type="hidden" name="action" value="delete">
+                                            <button type="submit" class="btn btn-danger">Excluir</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>Não há artigos cadastrados.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+
     </main>
 
     <footer id="footer" class="footer light-background">

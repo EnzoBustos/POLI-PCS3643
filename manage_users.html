@@ -12,13 +12,14 @@
     <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
 
     <!-- Favicons -->
-    <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
-    <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='img/AedesWikifavicon.jpg') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/apple-touch-icon.jpg') }}" rel="apple-touch-icon">
 
     <!-- Preload para otimização -->
-    <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='css/main.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" as="style">
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -28,16 +29,14 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-</head>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
 <body class="index-page">
 
@@ -94,7 +93,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
-                    <img src="assets/img/LogoAedesWiki.png" alt="">
+                    <img src="{{ url_for('static', filename='img/LogoAedesWiki.png') }}" alt="">
                     <h1 class="sitename">
                         <em>Aedes</em>Wiki
                     </h1>
@@ -244,7 +243,92 @@
     </header>
 
     <main class="main">
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Gerenciar Usuários</title>
+            <style>
+                /* Estilo da tabela */
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    font-size: 16px;
+                    text-align: left;
+                }
+
+                table th,
+                table td {
+                    border: 1px solid #ddd;
+                    padding: 12px;
+                }
+
+                table th {
+                    background-color: #f4f4f4;
+                }
+
+                table tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+
+                table tr:hover {
+                    background-color: #f1f1f1;
+                }
+
+                button.delete-btn {
+                    background-color: #dc3545;
+                    color: white;
+                    border: none;
+                    padding: 8px 12px;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                }
+
+                button.delete-btn:hover {
+                    background-color: #c82333;
+                }
+            </style>
+        </head>
+
+        <body>
+            <h1>Gerenciar Usuários</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome de Usuário</th>
+                        <th>E-mail</th>
+                        <th>Tipo de Usuário</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.user_type }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('delete_user') }}">
+                                <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                                <button type="submit" class="btn btn-danger">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </body>
+
+        </html>
+
     </main>
+
+
 
     <footer id="footer" class="footer light-background">
 
@@ -350,7 +434,6 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

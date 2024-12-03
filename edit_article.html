@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Artigo</title>
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Editar Artigo</h1>
+
+    <form method="POST" action="{{ url_for('edit_article') }}">
+        <input type="hidden" name="article_id" value="{{ article.article_id }}">
+
+        <label for="new_title">Título:</label>
+        <input type="text" id="new_title" name="new_title" value="{{ article.title }}" required>
+
+        <label for="new_content">Conteúdo:</label>
+        <textarea id="new_content" name="new_content" rows="10" required>{{ article.content }}</textarea>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</body>
+
+</html>

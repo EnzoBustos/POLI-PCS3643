@@ -23,7 +23,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,13 +40,12 @@
 </head>
 
 <body class="index-page">
-
   <header id="header" class="header sticky-top">
+    {% if current_user.is_authenticated %}
 
     <div class="topbar d-flex align-items-center">
-
       <div class="container d-flex justify-content-center justify-content-md-between">
-        <!--Info de Contato à Esquerda-->
+        <!-- Info de Contato à Esquerda -->
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-envelope-open d-flex align-items-center">
             <a href="mailto:aedeswiki@exemplo.gov" target="_blank" rel="noopener noreferrer">
@@ -62,37 +63,34 @@
             </a>
           </i>
         </div>
-        <!--Ícones de Media à direita-->
+        <!-- Ícones de Media à Direita -->
         <div class="social-links d-none d-md-flex align-items-center">
-          <a href="tiktok.com" target="_blank" class="tiktok">
+          <a href="https://tiktok.com" target="_blank" class="tiktok">
             <i class="bi bi-tiktok"></i>
           </a>
-          <a href="whatsapp.com" target="_blank" class="whatsapp">
+          <a href="https://whatsapp.com" target="_blank" class="whatsapp">
             <i class="bi bi-whatsapp"></i>
           </a>
-          <a href="discord.com" target="_blank" class="discord">
+          <a href="https://discord.com" target="_blank" class="discord">
             <i class="bi bi-discord"></i>
           </a>
-          <a href="x.com" target="_blank" class="twitter">
-            <i class="bi bi-twitter-x"></i>
+          <a href="https://x.com" target="_blank" class="twitter">
+            <i class="bi bi-twitter"></i>
           </a>
-          <a href="facebook.com" target="_blank" class="facebook">
+          <a href="https://facebook.com" target="_blank" class="facebook">
             <i class="bi bi-facebook"></i>
           </a>
-          <a href="instagram.com" target="_blank" class="instagram">
+          <a href="https://instagram.com" target="_blank" class="instagram">
             <i class="bi bi-instagram"></i>
           </a>
-          <a href="linkedin.com" target="_blank" class="linkedin">
+          <a href="https://linkedin.com" target="_blank" class="linkedin">
             <i class="bi bi-linkedin"></i>
           </a>
-        
-          </div>
         </div>
       </div>
     </div><!-- End Top Bar -->
 
     <div class="branding d-flex align-items-center">
-
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="auth-index.html" class="logo d-flex align-items-center me-auto">
           <img src="assets/img/LogoAedesWiki.png" alt="">
@@ -102,14 +100,11 @@
         </a>
 
         <nav id="navmenu" class="navmenu">
-
           <ul>
-            <li><a href="./auth-index.html" class="active">Página inicial<br></a></li>
+            <li><a href="./auth-index.html" class="active">Página inicial</a></li>
             <li class="dropdown">
               <a href="./auth-index.html#sobre">
-                <span>
-                  Informações
-                </span>
+                <span>Informações</span>
                 <i class="bi bi-chevron-down toggle-dropdown"></i>
               </a>
               <ul>
@@ -120,25 +115,22 @@
                 <li><a href="./auth-index.html#footer">Criadores da Wiki</a></li>
               </ul>
             </li>
-            <li><a href="./news.html">Notícias</a></li>
+            <li><a href="{{ url_for('dengue_news') }}">Notícias</a></li>
             <li><a href="./report.html">Denuncie</a></li>
             <li class="dropdown">
               <a href="./profile.html">
-                <span>
-                  Sua página
-                </span>
+                <span>Sua página</span>
                 <i class="bi bi-person-circle"></i>
               </a>
               <ul>
-                <li><a href="./profile.html">Meu Perfil</a></li>
+                <li><a href="{{ url_for('profile') }}">Meu Perfil</a></li>
                 <li><a href="./posts.html">Minhas Publicações</a></li>
                 <li><a href="./friends-list.html">Lista de Amigos</a></li>
                 <li><a href="./settings.html">Configurações</a></li>
+                <li><a href="{{ url_for('logout') }}" class="btn btn-logout">Sair</a></li>
               </ul>
             </li>
           </ul>
-          
-          <!--Não mexer nisso-->
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
@@ -146,13 +138,111 @@
           <i class="fa-solid fa-mosquito" style="margin-right: 0.5em;"></i>
           <span>Acesse a Wiki</span>
           <i class="fa-solid fa-mosquito" style="margin-left: 0.5em;"></i>
-        </a>        
-
+        </a>
       </div>
-
     </div>
 
+    {% else %}
+    <div class="topbar d-flex align-items-center">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <!-- Info de Contato à Esquerda -->
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope-open d-flex align-items-center">
+            <a href="mailto:aedeswiki@exemplo.gov" target="_blank" rel="noopener noreferrer">
+              aedeswiki@exemplo.gov
+            </a>
+          </i>
+          <i class="bi bi-telephone d-flex align-items-center ms-4">
+            <a href="https://wa.link/qx23r2" target="_blank" rel="noopener noreferrer">
+              +55 (11) 91234-5678
+            </a>
+          </i>
+          <i class="bi bi-link-45deg d-flex align-items-center ms-4">
+            <a href="https://enzobustos.github.io/POLI-PCS3643/" target="_blank" rel="noopener noreferrer">
+              enzobustos.github.io/POLI-PCS3643/
+            </a>
+          </i>
+        </div>
+        <!-- Ícones de Media à Direita -->
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="https://tiktok.com" target="_blank" class="tiktok">
+            <i class="bi bi-tiktok"></i>
+          </a>
+          <a href="https://whatsapp.com" target="_blank" class="whatsapp">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <a href="https://discord.com" target="_blank" class="discord">
+            <i class="bi bi-discord"></i>
+          </a>
+          <a href="https://x.com" target="_blank" class="twitter">
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a href="https://facebook.com" target="_blank" class="facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" class="linkedin">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+      </div>
+    </div><!-- End Top Bar -->
+
+    <div class="branding d-flex align-items-center">
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+          <img src="assets/img/LogoAedesWiki.png" alt="">
+          <h1 class="sitename">
+            <em>Aedes</em>Wiki
+          </h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="./index.html" class="active">Página inicial</a></li>
+            <li class="dropdown">
+              <a href="./index.html#sobre">
+                <span>Informações</span>
+                <i class="bi bi-chevron-down toggle-dropdown"></i>
+              </a>
+              <ul>
+                <li><a href="./index.html">Mosquito</a></li>
+                <li><a href="./index.html#services">Ações de Prevenção</a></li>
+                <li><a href="./index.html#faq">Perguntas Frequentes</a></li>
+                <li><a href="./index.html#gallery">Galeria</a></li>
+                <li><a href="./index.html#footer">Criadores da Wiki</a></li>
+              </ul>
+            </li>
+            <li><a href="{{ url_for('dengue_news') }}">Notícias</a></li>
+            <li><a href="./report.html">Denuncie</a></li>
+            <li class="dropdown">
+              <a href="./login">
+                <span>Sua página</span>
+                <i class="bi bi-person-circle"></i>
+              </a>
+              <ul>
+                <li><a href="./login">Login</a></li>
+                <li><a href="{{ url_for('register') }}" class="btn btn-logout">Registrar-se</a></li>
+                <li><a href="./settings.html">Configurações</a></li>
+              </ul>
+            </li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="cta-btn d-none d-sm-block" href="./wiki.html">
+          <i class="fa-solid fa-mosquito" style="margin-right: 0.5em;"></i>
+          <span>Acesse a Wiki</span>
+          <i class="fa-solid fa-mosquito" style="margin-left: 0.5em;"></i>
+        </a>
+      </div>
+    </div>
+
+    {% endif %}
   </header>
+
 
   <main class="main">
 
@@ -173,10 +263,16 @@
             <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
               <h3>Perigos do <br> <em>Aedes aegypti</em></h3>
               <p>
-                O <em>Aedes aegypti</em> é um mosquito conhecido por transmitir doenças como Dengue, Zika, Chikungunya e Febre Amarela, afetando muitas regiões tropicais e subtropicais. Ele se reproduz em locais com água parada, como vasos de plantas e recipientes mal vedados. As picadas desse mosquito podem causar sintomas como febre, dores no corpo e nas articulações, além de erupções na pele. Em casos mais graves, como na dengue, pode haver complicações sérias. Por isso, eliminar focos de água parada e se proteger contra picadas são medidas importantes para prevenir essas doenças.
+                O <em>Aedes aegypti</em> é um mosquito conhecido por transmitir doenças como Dengue, Zika, Chikungunya
+                e Febre Amarela, afetando muitas regiões tropicais e subtropicais. Ele se reproduz em locais com água
+                parada, como vasos de plantas e recipientes mal vedados. As picadas desse mosquito podem causar
+                sintomas como febre, dores no corpo e nas articulações, além de erupções na pele. Em casos mais
+                graves, como na dengue, pode haver complicações sérias. Por isso, eliminar focos de água parada e se
+                proteger contra picadas são medidas importantes para prevenir essas doenças.
               </p>
               <div class="text-center">
-                <a href="./wiki.html" class="more-btn"><span>Clique para saber mais</span> <i class="bi bi-chevron-right"></i></a>
+                <a href="./wiki.html" class="more-btn"><span>Clique para saber mais</span> <i
+                    class="bi bi-chevron-right"></i></a>
               </div>
             </div>
           </div><!-- End Why Box -->
@@ -187,21 +283,23 @@
 
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <a href="./prevention.html">
-                  <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
-                    <i class="bi bi-shield-check"></i>
-                    <h4>Prevenção e Sintomas</h4>
-                    <p>Descubra como eliminar criadouros e os principais sintomas das doenças que este mosquito transmite.</p>
+                    <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                      <i class="bi bi-shield-check"></i>
+                      <h4>Prevenção e Sintomas</h4>
+                      <p>Descubra como eliminar criadouros e os principais sintomas das doenças que este mosquito
+                        transmite.</p>
                     </div>
                   </a>
                 </div><!-- End Icon Box -->
 
 
                 <div class="col-xl-4 d-flex align-items-stretch">
-                  <a href="./news.html">
-                     <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                  <a href="{{ url_for('dengue_news') }}">
+                    <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
                       <i class="bi bi-newspaper"></i>
                       <h4>Atualizações e Notícias Recentes</h4>
-                      <p>Confira as novidades sobre os surtos das doenças na sua região e as novas medidas de combate ao <em>Aedes aegypti</em>.</p>
+                      <p>Confira as novidades sobre os surtos das doenças na sua região e as novas medidas de combate
+                        ao <em>Aedes aegypti</em>.</p>
                     </div>
                   </a>
                 </div><!-- End Icon Box -->
@@ -212,8 +310,9 @@
                     <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
                       <i class="bi bi-megaphone"></i>
                       <h4>Denúncia de Focos e Criadouros</h4>
-                      <p>Denuncie possíveis focos na sua comunidade e ajude a combater a proliferação deste vetor de doenças!</p>
-                  </div>
+                      <p>Denuncie possíveis focos na sua comunidade e ajude a combater a proliferação deste vetor de
+                        doenças!</p>
+                    </div>
                   </a>
                 </div><!-- End Icon Box -->
               </div>
@@ -240,7 +339,10 @@
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
             <h3>Sobre o mosquito</h3>
             <p>
-              O Aedes aegypti é um mosquito que transmite doenças como dengue, zika e chikungunya. Ele se reproduz em água parada, como em pneus, vasos de plantas e caixas d'água. Suas picadas podem causar febre, dores articulares e erupções cutâneas. O controle do Aedes aegypti é essencial para prevenir surtos dessas doenças, exigindo medidas eficazes para eliminar seus criadouros e evitar a proliferação.
+              O Aedes aegypti é um mosquito que transmite doenças como dengue, zika e chikungunya. Ele se reproduz em
+              água parada, como em pneus, vasos de plantas e caixas d'água. Suas picadas podem causar febre, dores
+              articulares e erupções cutâneas. O controle do Aedes aegypti é essencial para prevenir surtos dessas
+              doenças, exigindo medidas eficazes para eliminar seus criadouros e evitar a proliferação.
             </p>
             <ul>
               <li>
@@ -273,50 +375,54 @@
 
     </section><!-- /About Section -->
 
-<!-- Seção de Estatísticas -->
-<section id="stats" class="stats section light-background">
+    <!-- Seção de Estatísticas -->
+    <section id="stats" class="stats section light-background">
 
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-    <div class="row gy-4">
+        <div class="row gy-4">
 
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="fa-solid fa-house-medical-circle-check"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="5724" data-purecounter-duration="1" class="purecounter"></span>
-          <p>Residências Tratadas</p>
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-house-medical-circle-check"></i>
+            <div class="stats-item">
+              <span data-purecounter-start="0" data-purecounter-end="5724" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Residências Tratadas</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <div class="stats-item">
+              <span data-purecounter-start="0" data-purecounter-end="1233" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Pessoas Conscientizadas</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-ban"></i>
+            <div class="stats-item">
+              <span data-purecounter-start="0" data-purecounter-end="3247" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Focos Eliminados</p>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
+            <i class="fa-solid fa-bullhorn"></i>
+            <div class="stats-item">
+              <span data-purecounter-start="0" data-purecounter-end="82" data-purecounter-duration="1"
+                class="purecounter"></span>
+              <p>Campanhas Realizadas</p>
+            </div>
+          </div><!-- End Stats Item -->
+
         </div>
-      </div><!-- End Stats Item -->
 
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="fa-solid fa-person-chalkboard"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="1233" data-purecounter-duration="1" class="purecounter"></span>
-          <p>Pessoas Conscientizadas</p>
-        </div>
-      </div><!-- End Stats Item -->
+      </div>
 
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="fa-solid fa-ban"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="3247" data-purecounter-duration="1" class="purecounter"></span>
-          <p>Focos Eliminados</p>
-        </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-        <i class="fa-solid fa-bullhorn"></i>
-        <div class="stats-item">
-          <span data-purecounter-start="0" data-purecounter-end="82" data-purecounter-duration="1" class="purecounter"></span>
-          <p>Campanhas Realizadas</p>
-        </div>
-      </div><!-- End Stats Item -->
-
-    </div>
-
-  </div>
-
-</section><!-- /Seção de Estatísticas -->
+    </section><!-- /Seção de Estatísticas -->
 
 
     <!-- Services Section -->
@@ -338,31 +444,34 @@
               <div class="icon">
                 <i class="fa-solid fa-spray-can-sparkles"></i>
               </div>
-                <h3>Fumacê</h3>
-              <p>Aplicação de inseticida em áreas estratégicas para eliminar focos do mosquito Aedes aegypti, reduzindo a proliferação em regiões com alto risco.</p>
+              <h3>Fumacê</h3>
+              <p>Aplicação de inseticida em áreas estratégicas para eliminar focos do mosquito Aedes aegypti,
+                reduzindo a proliferação em regiões com alto risco.</p>
             </div>
           </div><!-- End Service Item -->
-          
+
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item position-relative">
               <div class="icon">
                 <i class="fa-solid fa-user-check"></i>
               </div>
-                <h3>Visitas Técnicas</h3>
-              <p>Equipes especializadas realizam inspeções domiciliares para identificar e orientar a eliminação de possíveis focos de mosquito nos ambientes.</p>
+              <h3>Visitas Técnicas</h3>
+              <p>Equipes especializadas realizam inspeções domiciliares para identificar e orientar a eliminação de
+                possíveis focos de mosquito nos ambientes.</p>
             </div>
           </div><!-- End Service Item -->
-          
+
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
             <div class="service-item position-relative">
               <div class="icon">
                 <i class="fa-solid fa-bullhorn"></i>
               </div>
-                <h3>Campanhas Educativas</h3>
-              <p>Ações de conscientização em escolas, empresas e comunidades para informar a população sobre práticas de prevenção contra a dengue.</p>
+              <h3>Campanhas Educativas</h3>
+              <p>Ações de conscientização em escolas, empresas e comunidades para informar a população sobre práticas
+                de prevenção contra a dengue.</p>
             </div>
           </div><!-- End Service Item -->
-          
+
 
 
         </div>
@@ -392,43 +501,50 @@
               <div class="faq-item">
                 <h3>O que é dengue e como ela é transmitida?</h3>
                 <div class="faq-content">
-                  <p>A dengue é uma doença viral transmitida pela picada do mosquito Aedes aegypti, que se prolifera em locais com água parada, como pneus, vasos de plantas e recipientes abertos.</p>
+                  <p>A dengue é uma doença viral transmitida pela picada do mosquito Aedes aegypti, que se prolifera
+                    em locais com água parada, como pneus, vasos de plantas e recipientes abertos.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
-              
+
               <div class="faq-item">
                 <h3>Quais são os principais sintomas da dengue?</h3>
                 <div class="faq-content">
-                  <p>Os sintomas mais comuns incluem febre alta, dor de cabeça intensa, dor atrás dos olhos, dores no corpo, cansaço extremo e, em alguns casos, manchas vermelhas na pele.</p>
+                  <p>Os sintomas mais comuns incluem febre alta, dor de cabeça intensa, dor atrás dos olhos, dores no
+                    corpo, cansaço extremo e, em alguns casos, manchas vermelhas na pele.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
-              
+
               <div class="faq-item">
                 <h3>Como prevenir a dengue?</h3>
                 <div class="faq-content">
-                  <p>A principal forma de prevenção é eliminar os focos de água parada onde o mosquito possa se reproduzir. Tampe bem caixas d'água, elimine recipientes com água parada e limpe calhas e ralos com frequência.</p>
+                  <p>A principal forma de prevenção é eliminar os focos de água parada onde o mosquito possa se
+                    reproduzir. Tampe bem caixas d'água, elimine recipientes com água parada e limpe calhas e ralos
+                    com frequência.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
-              
+
               <div class="faq-item">
                 <h3>Existe tratamento para a dengue?</h3>
                 <div class="faq-content">
-                  <p>Não há tratamento específico para a dengue, mas os sintomas podem ser aliviados com repouso, hidratação e medicamentos para dor, prescritos por um médico. Em casos graves, o atendimento hospitalar é necessário.</p>
+                  <p>Não há tratamento específico para a dengue, mas os sintomas podem ser aliviados com repouso,
+                    hidratação e medicamentos para dor, prescritos por um médico. Em casos graves, o atendimento
+                    hospitalar é necessário.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
-              
+
               <div class="faq-item">
                 <h3>Como identificar possíveis focos do mosquito?</h3>
                 <div class="faq-content">
-                  <p>Locais como pratos de plantas, garrafas, pneus e calhas acumulam água e são potenciais criadouros. Manter esses locais secos e limpos ajuda a prevenir a proliferação do mosquito.</p>
+                  <p>Locais como pratos de plantas, garrafas, pneus e calhas acumulam água e são potenciais
+                    criadouros. Manter esses locais secos e limpos ajuda a prevenir a proliferação do mosquito.</p>
                 </div>
                 <i class="faq-toggle bi bi-chevron-right"></i>
               </div><!-- End Faq item-->
-              
+
 
             </div>
 
@@ -539,26 +655,26 @@
             <p>Laboratório de Engenharia De Software</p>
             <p class="mt-3">
               <strong>Telefone:</strong>
-              <a href="wa.me" ><span>
-                +55 (11) 91234-5678
-              </span></a>
+              <a href="wa.me"><span>
+                  +55 (11) 91234-5678
+                </span></a>
             </p>
-            <p><strong>E-mail:</strong> <span><a href="maito:aedeswiki@exemplo.gov" target="_blank">
-              aedeswiki@exemplo.gov
-            </a></span></p>
+            <p><strong>E-mail:</strong> <span><a href="mailto:aedeswiki@exemplo.gov" target="_blank">
+                  aedeswiki@exemplo.gov
+                </a></span></p>
             <p><strong>Website:</strong><span><a href="enzobustos.github.io/POLI-PCS3643/">
-              enzobustos.github.io/POLI-PCS3643/
-            </a></span></p>
+                  enzobustos.github.io/POLI-PCS3643/
+                </a></span></p>
           </div>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Adrian Oliveira</h4>
           <ul>
-            <li>Eng. Computação - 6° Período</li>
-            <li>Foco em Desenv. Back End</li>
-            <li>Desenvolvedor em Kotlin</li>
-            <li> </li>
+            <li>Eng. Computação - 3° Período</li>
+            <li>Foco em Inteligência Artificial</li>
+            <li>Desenvolvedor em Python</li>
+            <li>Três artigos publicados</li>
           </ul>
           <div class="social-links d-flex mt-4">
             <a href="https://wa.link/bfx35e" target="_blank"><i class="bi bi-whatsapp"></i></a>
@@ -571,7 +687,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Antônio Fassini</h4>
           <ul>
-            <li>Eng. Computação - 6° Período</li>
+            <li>Eng. Computação - 3° Período</li>
             <li>Foco em Inteligência Artificial</li>
             <li>Desenvolvedor em Python</li>
             <li>Três artigos publicados</li>
@@ -587,7 +703,7 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Bruno Schio</h4>
           <ul>
-            <li>Eng. Computação - 6° Período</li>
+            <li>Eng. Computação - 3° Período</li>
             <li>Foco em Inteligência Artificial</li>
             <li>Desenvolvedor em Python</li>
             <li>Três artigos publicados</li>
@@ -621,7 +737,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>

@@ -242,8 +242,85 @@
 
         {% endif %}
     </header>
-
     <main class="main">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .form-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f9f9f9;
+            }
+
+            form {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 400px;
+                width: 100%;
+            }
+
+            form h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            form label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            form input,
+            form textarea,
+            form button {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            form input,
+            form textarea {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 14px;
+            }
+
+            form button {
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            form button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('create_article') }}">
+                <h1>Criar um novo artigo</h1>
+
+                <label for="title">Título</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="content">Conteúdo</label>
+                <textarea id="content" name="content" rows="10" cols="50" required></textarea>
+
+                <button type="submit">Criar Artigo</button>
+            </form>
+        </div>
     </main>
 
     <footer id="footer" class="footer light-background">

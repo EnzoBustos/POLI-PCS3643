@@ -12,13 +12,14 @@
     <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
 
     <!-- Favicons -->
-    <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
-    <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='img/AedesWikifavicon.jpg') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/apple-touch-icon.jpg') }}" rel="apple-touch-icon">
 
     <!-- Preload para otimização -->
-    <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='css/main.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" as="style">
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -28,16 +29,14 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-</head>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
 <body class="index-page">
 
@@ -94,7 +93,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
-                    <img src="assets/img/LogoAedesWiki.png" alt="">
+                    <img src="{{ url_for('static', filename='img/LogoAedesWiki.png') }}" alt="">
                     <h1 class="sitename">
                         <em>Aedes</em>Wiki
                     </h1>
@@ -244,7 +243,134 @@
     </header>
 
     <main class="main">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+            }
+
+            .approval-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+
+            .approval-content {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 800px;
+                width: 100%;
+            }
+
+            .approval-content h1 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .approval-content ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .approval-content li {
+                margin-bottom: 20px;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: #fdfdfd;
+            }
+
+            .approval-content li h3 {
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 10px;
+            }
+
+            .approval-content li p {
+                font-size: 16px;
+                color: #777;
+                margin-bottom: 15px;
+            }
+
+            .approval-content li form {
+                display: inline-block;
+            }
+
+            .approval-content li form button {
+                padding: 8px 16px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s ease;
+            }
+
+            .approval-content li form button[type="submit"] {
+                margin-right: 5px;
+            }
+
+            .approval-content li form button[style*="background-color: green"] {
+                background-color: #28a745;
+                color: white;
+            }
+
+            .approval-content li form button[style*="background-color: green"]:hover {
+                background-color: #218838;
+            }
+
+            .approval-content li form button[style*="background-color: red"] {
+                background-color: #dc3545;
+                color: white;
+            }
+
+            .approval-content li form button[style*="background-color: red"]:hover {
+                background-color: #c82333;
+            }
+
+            .approval-content p {
+                text-align: center;
+                color: #777;
+            }
+        </style>
+
+        <div class="approval-container">
+            <div class="approval-content">
+                <h1>Artigos Pendentes para Aprovação</h1>
+
+                {% if articles %}
+                <ul>
+                    {% for article in articles %}
+                    <li>
+                        <h3>{{ article.title }}</h3>
+                        <p>{{ article.content }}</p>
+                        <form method="POST" action="{{ url_for('admin_articles') }}">
+                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                            <input type="hidden" name="action" value="approve">
+                            <button type="submit">Aprovar</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('admin_articles') }}">
+                            <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                            <input type="hidden" name="action" value="reject">
+                            <button type="submit">Rejeitar</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>Não há artigos pendentes para aprovação.</p>
+                {% endif %}
+            </div>
+        </div>
     </main>
+
 
     <footer id="footer" class="footer light-background">
 
@@ -350,7 +476,6 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

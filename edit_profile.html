@@ -12,13 +12,14 @@
     <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
 
     <!-- Favicons -->
-    <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
-    <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='img/AedesWikifavicon.jpg') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/apple-touch-icon.jpg') }}" rel="apple-touch-icon">
 
     <!-- Preload para otimização -->
-    <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='css/main.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" as="style">
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -28,16 +29,14 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-</head>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
 <body class="index-page">
 
@@ -94,7 +93,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
-                    <img src="assets/img/LogoAedesWiki.png" alt="">
+                    <img src="{{ url_for('static', filename='img/LogoAedesWiki.png') }}" alt="">
                     <h1 class="sitename">
                         <em>Aedes</em>Wiki
                     </h1>
@@ -243,8 +242,124 @@
         {% endif %}
     </header>
 
-    <main class="main">
-    </main>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Perfil</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+            }
+
+            .main-container {
+                min-height: calc(100vh - 160px);
+                /* Considera o header e footer */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
+
+            .edit-profile-container {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .edit-profile-container h1 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            .edit-profile-container label {
+                display: block;
+                text-align: left;
+                margin-bottom: 5px;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .edit-profile-container input {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                color: #333;
+            }
+
+            .edit-profile-container button {
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .edit-profile-container button:hover {
+                background-color: #0056b3;
+            }
+
+            footer {
+                text-align: center;
+                padding: 20px;
+                background-color: #f1f1f1;
+            }
+
+            @media (max-width: 768px) {
+                .edit-profile-container {
+                    padding: 20px;
+                }
+
+                .edit-profile-container h1 {
+                    font-size: 20px;
+                }
+
+                .edit-profile-container button {
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header" class="header sticky-top">
+            <!-- Conteúdo do Header Aqui -->
+        </header>
+
+        <main class="main-container">
+            <div class="edit-profile-container">
+                <h1>Editar Perfil</h1>
+                <form method="POST" action="{{ url_for('edit_profile') }}">
+                    <label for="username">Nome de Usuário:</label>
+                    <input type="text" id="username" name="username" value="{{ user_info.username }}" required>
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" value="{{ user_info.email }}" required>
+
+                    <button type="submit">Salvar</button>
+                </form>
+            </div>
+        </main>
+
+        <footer id="footer" class="footer light-background">
+            <!-- Conteúdo do Footer Aqui -->
+        </footer>
+    </body>
+
 
     <footer id="footer" class="footer light-background">
 
@@ -350,7 +465,6 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

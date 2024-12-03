@@ -244,6 +244,88 @@
     </header>
 
     <main class="main">
+
+        <!-- Page Title -->
+        <div class="page-title" data-aos="fade">
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ol>
+                        <li><a href="auth-index.html">Home</a></li>
+                        <li class="current">Denuncie</li>
+                    </ol>
+                </div>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <!-- Complaint Section -->
+        <section id="appointment" class="appointment section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>Denúncia</h2>
+                <p>Utilize este formulário para denunciar pessoas que desrespeitam os métodos de combate ao Aedes
+                    aegypti.</p>
+            </div><!-- End Section Title -->
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <form action="{{ url_for('submit_complaint') }}" method="POST" role="form">
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Seu Nome"
+                                required="">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Seu Email"
+                                required="">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <input type="tel" name="phone" class="form-control" id="phone" placeholder="Seu Telefone"
+                                required="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <input type="text" name="location" class="form-control" id="location"
+                                placeholder="Local da Denúncia" required="">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <select name="severity" class="form-select" required="">
+                                <option value="">Severidade da Situação</option>
+                                <option value="Baixa">Baixa</option>
+                                <option value="Média">Média</option>
+                                <option value="Alta">Alta</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <select name="method" class="form-select" required="">
+                                <option value="">Método de Combate Desrespeitado</option>
+                                <option value="Eliminação de criadouros">Eliminação de criadouros</option>
+                                <option value="Uso de repelentes">Uso de repelentes</option>
+                                <option value="Limpeza de terrenos">Limpeza de terrenos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <textarea name="message" class="form-control" rows="5"
+                            placeholder="Descreva a situação (Opcional)"></textarea>
+                    </div>
+                    <div class="mt-3">
+                        <div class="text-center"><button type="submit">Enviar Denúncia</button></div>
+                    </div>
+                </form>
+
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+        </section><!-- /Complaint Section -->
+
     </main>
 
     <footer id="footer" class="footer light-background">
@@ -251,7 +333,7 @@
         <div class="container footer-top">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
+                    <a href="auth-index.html" class="logo d-flex align-items-center">
                         <span class="sitename">Criadores do <em>Aedes</em>Wiki</span>
                     </a>
                     <div class="footer-contact pt-3">

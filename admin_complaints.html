@@ -12,13 +12,14 @@
     <script src="https://kit.fontawesome.com/cdd01f6b83.js" crossorigin="anonymous"></script>
 
     <!-- Favicons -->
-    <link href="assets/img/AedesWikifavicon.jpg" rel="icon">
-    <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+    <link href="{{ url_for('static', filename='img/AedesWikifavicon.jpg') }}" rel="icon">
+    <link href="{{ url_for('static', filename='img/apple-touch-icon.jpg') }}" rel="apple-touch-icon">
 
     <!-- Preload para otimização -->
-    <link rel="preload" href="assets/css/main.css" as="style">
-    <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style">
-    <link rel="preload" href="assets/vendor/fontawesome-free/css/all.min.css" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='css/main.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" as="style">
+    <link rel="preload" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" as="style">
+
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -28,16 +29,14 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-</head>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 
 <body class="index-page">
 
@@ -94,7 +93,7 @@
         <div class="branding d-flex align-items-center">
             <div class="container position-relative d-flex align-items-center justify-content-between">
                 <a href="{{ url_for('index') }}" class="logo d-flex align-items-center me-auto">
-                    <img src="assets/img/LogoAedesWiki.png" alt="">
+                    <img src="{{ url_for('static', filename='img/LogoAedesWiki.png') }}" alt="">
                     <h1 class="sitename">
                         <em>Aedes</em>Wiki
                     </h1>
@@ -244,7 +243,111 @@
     </header>
 
     <main class="main">
+        <style>
+            /* Estilo principal da seção <main> */
+            main.main {
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 900px;
+                background-color: #ffffff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            main.main h1 {
+                font-size: 28px;
+                color: #007bff;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            /* Estilo para a lista de denúncias */
+            main.main ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            main.main ul li {
+                background-color: #f8f9fa;
+                margin-bottom: 20px;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+            }
+
+            main.main ul li h3 {
+                font-size: 18px;
+                color: #333;
+                margin: 0 0 10px;
+            }
+
+            main.main ul li p {
+                font-size: 14px;
+                color: #555;
+                margin: 5px 0;
+                line-height: 1.6;
+            }
+
+            main.main ul li form button {
+                background-color: #28a745;
+                color: #fff;
+                border: none;
+                padding: 8px 12px;
+                font-size: 14px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            main.main ul li form button:hover {
+                background-color: #218838;
+            }
+
+            /* Estilo para o texto caso não existam denúncias */
+            main.main p {
+                text-align: center;
+                font-size: 16px;
+                color: #6c757d;
+            }
+
+            /* Linha divisória entre as denúncias */
+            main.main ul li hr {
+                border: 0;
+                height: 1px;
+                background-color: #ddd;
+                margin: 15px 0;
+            }
+        </style>
+
+        <h1>Denúncias Pendentes</h1>
+
+        {% if complaints %}
+        <ul>
+            {% for complaint in complaints %}
+            <li>
+                <h3><strong>Local:</strong> {{ complaint.location }} - <strong>Gravidade:</strong> {{ complaint.severity
+                    }}</h3>
+                <p><strong>Nome:</strong> {{ complaint.name }}</p>
+                <p><strong>Email:</strong> {{ complaint.email }}</p>
+                <p><strong>Telefone:</strong> {{ complaint.phone }}</p>
+                <p><strong>Método:</strong> {{ complaint.method }}</p>
+                <p><strong>Mensagem:</strong> {{ complaint.message }}</p>
+
+                <!-- Botão para resolver a denúncia -->
+                <form method="POST" action="{{ url_for('admin_complaints') }}">
+                    <input type="hidden" name="complaint_id" value="{{ complaint.complaint_id }}">
+                    <button type="submit">Marcar como Resolvido</button>
+                </form>
+            </li>
+            <hr>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Não há denúncias pendentes.</p>
+        {% endif %}
     </main>
+
+
 
     <footer id="footer" class="footer light-background">
 
@@ -350,7 +453,6 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <!-- Preloader -->
-    <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

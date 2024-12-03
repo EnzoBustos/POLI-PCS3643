@@ -244,7 +244,83 @@
     </header>
 
     <main class="main">
-    </main>
+
+        <!-- Page Title -->
+        <div class="page-title" data-aos="fade">
+          <nav class="breadcrumbs">
+            <div class="container">
+              <ol>
+                <li><a href="auth-index.html">Home</a></li>
+                <li class="current">Sisaweb Data</li>
+              </ol>
+            </div>
+          </nav>
+        </div><!-- End Page Title -->
+    
+        <!-- Starter Section Section -->
+        <section id="starter-section" class="starter-section section">
+    
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Sisaweb Data</h2>
+            <p>Dados extraídos via API do Sisaweb</p>
+          </div><!-- End Section Title -->
+    
+        </section><!-- /Starter Section Section -->
+
+         <!-- About Section -->
+    <section id="sobre" class="about section">
+
+        <div class="container">
+  
+          <div class="row gy-4 gx-5">
+  
+            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200" style="display: flex; flex-direction: column; align-items: center;">
+                <!-- Botões de navegação -->
+                <div>
+                  <button onclick="showImage(1)">Imagem 1</button>
+                  <button onclick="showImage(2)">Imagem 2</button>
+                  <button onclick="showImage(3)">Imagem 3</button>
+                </div>
+                
+                <!-- Imagens -->
+                <div id="imageContainer" style="width: 100%; display: flex; justify-content: center;">
+                  <img id="img1" src="assets/img/Sisaweb(1).png" class="img-fluid" alt="Imagem 1" style="display: none; width: calc(100%);">
+                  <img id="img2" src="assets/img/Sisaweb(2).png" class="img-fluid" alt="Imagem 2" style="display: none; width: calc(100%);">
+                  <img id="img3" src="assets/img/Sisaweb(3).png" class="img-fluid" alt="Imagem 3" style="display: none; width: calc(100%);">
+                </div>
+              </div>
+              
+              <script>
+                // Função para exibir a imagem com base no índice
+                function showImage(imageNumber) {
+                  // Ocultar todas as imagens
+                  document.getElementById('img1').style.display = 'none';
+                  document.getElementById('img2').style.display = 'none';
+                  document.getElementById('img3').style.display = 'none';
+                  
+                  // Mostrar a imagem escolhida
+                  document.getElementById('img' + imageNumber).style.display = 'block';
+                }
+                
+                // Exibir a primeira imagem por padrão
+                showImage(1);
+              </script>
+
+            <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+              <h3>Sobre os dados</h3>
+              <p>
+                Os dados apresentados foram obtidos diretamente da API do Sisaweb, gentilmente disponibilizados através do Moodle da disciplina. Agradecemos profundamente aos dedicados trabalhadores e equipes que coletaram e organizaram essas informações, essenciais para o enfrentamento de desafios de saúde pública. Nas imagens exibidas, é possível observar mapas de calor que evidenciam as notificações, áreas de maior foco e os locais onde esforços foram concentrados no combate ao mosquito Aedes aegypti. Esses dados são fundamentais para compreender a dinâmica da transmissão de doenças como dengue, zika e chikungunya, além de embasar estratégias mais eficazes de controle.
+              </p>
+            </div>
+  
+          </div>
+  
+        </div>
+  
+      </section><!-- /About Section -->
+    
+      </main>
 
     <footer id="footer" class="footer light-background">
 
