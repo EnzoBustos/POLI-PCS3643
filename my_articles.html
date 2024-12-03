@@ -420,8 +420,10 @@
                                     <form method="POST" action="{{ url_for('delete_article') }}"
                                         style="display:inline;">
                                         <input type="hidden" name="article_id" value="{{ article.article_id }}">
+                                        <input type="hidden" name="origin" value="my_articles">
                                         <button type="submit" class="btn delete-btn">Excluir</button>
                                     </form>
+
                                 </div>
                             </td>
 

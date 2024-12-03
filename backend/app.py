@@ -114,7 +114,7 @@ def login():
                 user['user_type']  # Adiciona o user_type ao criar o objeto
             )
             login_user(user_obj)
-            return redirect(url_for('auth_index'))
+            return redirect(url_for('index'))
         else:
             flash('Credenciais inválidas. Tente novamente.', 'danger')
             return render_template('login.html', form=form)
@@ -759,20 +759,34 @@ def update_article():
 @login_required
 def delete_article():
     article_id = request.form.get('article_id')
+    # Verifica de qual página o pedido foi feito
+    origin = request.form.get('origin')
 
     if not article_id:
         flash("ID do artigo não fornecido.", "danger")
+        if origin == 'admin_articles':
+            return redirect(url_for('admin_articles'))
         return redirect(url_for('my_articles'))
 
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM articles WHERE article_id = %s AND user_id = %s",
-                   (article_id, current_user.id))
+
+    if current_user.user_type == 'admin':
+        # Admin pode deletar qualquer artigo
+        cursor.execute(
+            "DELETE FROM articles WHERE article_id = %s", (article_id,))
+    else:
+        # Usuários normais só podem deletar seus próprios artigos
+        cursor.execute("DELETE FROM articles WHERE article_id = %s AND user_id = %s",
+                       (article_id, current_user.id))
+
     conn.commit()
     cursor.close()
     conn.close()
 
     flash("Artigo excluído com sucesso.", "success")
+    if origin == 'admin_articles':
+        return redirect(url_for('admin_manage_articles'))
     return redirect(url_for('my_articles'))
 
 
@@ -817,9 +831,47 @@ def admin_manage_articles():
 def mapas_sisaweb():
     return render_template('sisaweb.html')
 
+
 @app.route('/infos_essenciais')
 def info_essenciais():
-    return render_template('infos_essenciais.html')
+    return render_template('aedesAegypti_wiki.html')
+
+
+@app.route('/promote_to_admin', methods=['POST'])
+@login_required
+def promote_to_admin():
+    # Certifica-se de que o usuário logado é admin
+    if current_user.user_type != 'admin':
+        flash("Você não tem permissão para executar esta ação.", "danger")
+        return redirect(url_for('manage_users'))
+
+    # Obtém o ID do usuário a ser promovido
+    user_id = request.form.get('user_id')
+
+    if not user_id:
+        flash("ID do usuário não fornecido.", "danger")
+        return redirect(url_for('manage_users'))
+
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    try:
+        # Atualiza o tipo de usuário para 'admin'
+        cursor.execute("""
+            UPDATE users
+            SET user_type = 'admin'
+            WHERE user_id = %s
+        """, (user_id,))
+        conn.commit()
+        flash("Usuário promovido a admin com sucesso.", "success")
+    except Exception as e:
+        flash(f"Erro ao promover o usuário: {e}", "danger")
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('manage_users'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

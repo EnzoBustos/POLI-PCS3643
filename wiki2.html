@@ -279,8 +279,30 @@
         .search-form button:hover {
             background-color: #0056b3;
         }
+
+        .formatted-content {
+            white-space: pre-wrap;
+            /* Respeita as quebras de linha */
+        }
+
+        .info-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .info-link a {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .info-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 
+    </style>
     <main class="main">
 
         <!-- Page Title -->
@@ -304,10 +326,13 @@
                 <p>Esta wiki foi criada como parte de um projeto de disciplina, com o objetivo de compartilhar
                     informações importantes sobre o Aedes aegypti, suas doenças, métodos de prevenção, curiosidades e <a
                         href="wiki-ciclo.html">ciclo de vida</a>. Navegue pelos tópicos abaixo para aprender mais.</p>
+                <!-- "Informações essenciais" abaixo do título -->
+                <div class="info-link">
+                    <a href="{{ url_for('info_essenciais') }}">Informações essenciais</a>
+                </div>
             </div><!-- End Section Title -->
 
             <div class="container" data-aos="fade-up" data-aos-delay="100">
-
                 <div class="row">
                     <div class="search-bar container">
                         <form method="GET" action="{{ url_for('wiki') }}" class="search-form">
@@ -341,25 +366,18 @@
                                         <div class="formatted-content">
                                             {{ article.content }}
                                         </div>
-
-                                    </div>
-                                    <div class="col-lg-4 text-center order-1 order-lg-2">
-                                        <img src="assets/img/default-article.jpg" alt="Imagem do Artigo"
-                                            class="img-fluid">
                                     </div>
                                 </div>
-
-
                             </div>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
-
             </div>
         </section><!-- End Wiki Section -->
 
     </main>
+
 
 
 

@@ -1,0 +1,35 @@
+<html lang="pt-BR">
+  <body>
+    <div class="resultado">
+      <b>Resultado: </b><span><!-- Resultado preenchido via JS --></span>
+    </div>
+
+    <div class="valores" style="display: none;">
+      <span>14</span>
+      <span class="marcador">15</span>
+      <span>76</span>
+      <span>32</span>
+      <span>33</span>
+      <div>39</div>
+      <span class="marcador">5</span>
+      <span>7</span>
+      <span>-10</span>
+      <span>2</span>
+    </div>
+
+    <script>
+      const computeResult = () => {
+        const selector = 'div.valores span:not(.marcador)';
+        const elements = [...document.querySelectorAll(selector)];
+        const values = elements.map(value => +value.innerHTML);
+        const filtered = values.filter(v => v > 0 && v % 2 == 0);
+        let magic = 0;
+        for (const x of filtered) {
+          magic += x / 2;
+        }
+        return magic - values[1];
+      };
+      document.querySelector('div.resultado span').innerHTML = computeResult();
+    </script>
+  </body>
+</html>
