@@ -262,6 +262,7 @@ def fetch_dengue_news():
     for article in articles:
         title = article.get('title')
         url = article.get('url', "")  # Captura o campo 'url'
+        article['content'] = article['content'].strip().replace('\n', '<br>')
 
         if not title or not url:  # Certifica-se de que o título e a URL existem
             continue
@@ -319,6 +320,9 @@ def get_news_id_by_title(title):
 
 @app.route('/dengue_news')
 def dengue_news():
+    # Atualiza as notícias antes de carregar do banco de dados
+    fetch_dengue_news()
+
     page = request.args.get('page', 1, type=int)
     per_page = 5  # Número de artigos por página
     offset = (page - 1) * per_page
